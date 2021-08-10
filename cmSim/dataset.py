@@ -6,22 +6,19 @@ from datetime import date
 def get_datasets(df, substring=None, format=None):
   substring = substring if substring is not None else ''
   format = format if format is not None else ''
-  filtered_df = df.filter((df['dataset_name'].contains(substring)) & (df['dataset_name'].contains(format)))
-  all_rows = filtered_df.collect()
-  datasets = []
-  for dr in filtered_df.select('dataset_name').distinct().collect():
-    dataset_rows = [row for row in all_rows if row['dataset_name'] == dr['dataset_name']]
-    datasets.append(Dataset.from_rowslist(rowslist=dataset_rows))
+  df = df[(df['dataset_name'].str.contains(substring)) & (df['dataset_name'].str.contains(format))]
+  datasets = [Dataset.from_dataframe(df=df[df['dataset_name'] == name])
+              for name in df['dataset_name'].unique()]
   return datasets
 
 
 class Dataset:
 
-  def __init__(self, name, ID, format, rowslist=None):
+  def __init__(self, name, ID, format, df=None):
     self.name = name
     self.ID = ID
     self.format = format
-    self._rowslist = rowslist
+    self.df = df
 
   def __repr__(self):
     class_name = self.__class__.__qualname__
@@ -30,19 +27,19 @@ class Dataset:
     return f'{class_name}({args})'
 
   @classmethod
-  def from_rowslist(cls, rowslist):
-    name = rowslist[0]['dataset_name']
-    ID = rowslist[0]['dataset_id']
-    format = rowslist[0]['tier']
-    return cls(name=name, ID=ID, format=format, rowslist=rowslist)
+  def from_dataframe(cls, df):
+    name = df['dataset_name'].iloc[0]
+    ID = df['dataset_id'].iloc[0]
+    format = df['tier'].iloc[0]
+    return cls(name=name, ID=ID, format=format, df=df)
 
   @property
   def totsize(self):
-    return np.max([row['rep_size'] for row in self._rowslist])  # assuming totsize == max(rep_size)
+    return self.df['rep_size'].max()  # assuming totsize == max(rep_size)
 
   def get_history(self, freq='M'):
     history = {}
-    for row in self._rowslist:
+    for _, row in self.df.iterrows():
       for dt in pd.date_range(start=row['min_time'], end=row['max_time'], freq=freq):
         node = row['node_name']
         d = {'number of data blocks': 0, 'total data fraction': 0.}
