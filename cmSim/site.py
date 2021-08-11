@@ -39,9 +39,5 @@ class Site:
     return self.name.split('_')[1]
 
   def get_storage_history(self, timeline):
-    storage_history = {dt: 0. for dt in timeline}
-    freq = timeline.freq
-    for _, row in self.df.iterrows():
-      for dt in pd.date_range(start=row['min_time'], end=row['max_time'], freq=freq):
-        storage_history[dt] += row['rep_size']
-    return storage_history
+    size = [self.df[(date>=self.df['min_time']) & (date<=self.df['max_time'])]['rep_size'].sum() for date in timeline]
+    return size
