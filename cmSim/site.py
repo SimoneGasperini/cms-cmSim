@@ -18,9 +18,13 @@ class Site:
 
     def __repr__(self):
         class_name = self.__class__.__qualname__
-        args = ', '.join([f'name={self.name}', f'disk={self.disk}', f'cpu={self.cpu}',
-                          f'tier={self.tier}', f'country={self.country}'])
-        return f'{class_name}({args})'
+        params = list(self.__init__.__code__.co_varnames)
+        params.remove('self')
+        params.remove('df')
+        args = [f'{key}={getattr(self, key)}' for key in params]
+        args.append(f'tier={self.tier}')
+        args.append(f'country={self.country}')
+        return f'{class_name}({", ".join(args)})'
 
     @classmethod
     def from_dataframe(cls, df):
