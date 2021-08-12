@@ -1,42 +1,48 @@
-import numpy as np
 import pandas as pd
 from datetime import date
 
 
-def get_datasets(df, substring=None, format=None):
+def get_datasets(df, info_df, substring=None, format=None):
     substring = substring if substring is not None else ''
     format = format if format is not None else ''
     df = df[(df['dataset_name'].str.contains(substring))
             & (df['dataset_name'].str.contains(format))]
-    datasets = [Dataset.from_dataframe(df=df[df['dataset_name'] == name])
+    datasets = [Dataset.from_dataframe(df=df[df['dataset_name'] == name],
+                                       info=info_df[info_df['d_dataset'] == name].iloc[0])
                 for name in df['dataset_name'].unique()]
     return datasets
 
 
 class Dataset:
 
-    def __init__(self, name, ID, format, df=None):
+    def __init__(self, name, ID, size=None, nfiles=None, nevents=None, format=None, df=None):
         self.name = name
         self.ID = ID
+        self.size = size
+        self.nfiles = nfiles
+        self.nevents = nevents
         self.format = format
         self.df = df
 
     def __repr__(self):
         class_name = self.__class__.__qualname__
-        args = ', '.join([f'name={self.name}', f'ID={self.ID}', f'format={self.format}',
-                          f'totsize={round(self.totsize * 1e-9, 3)}[GB]'])
+        params = list(self.__init__.__code__.co_varnames)
+        params.remove('self')
+        params.remove('df')
+        args = ', '.join([f'{key}={getattr(self, key)}' for key in params])
         return f'{class_name}({args})'
 
     @classmethod
-    def from_dataframe(cls, df):
-        name = df['dataset_name'].iloc[0]
-        ID = df['dataset_id'].iloc[0]
-        format = df['tier'].iloc[0]
-        return cls(name=name, ID=ID, format=format, df=df)
-
-    @property
-    def totsize(self):
-        return self.df['rep_size'].max()  # assuming totsize == max(rep_size)
+    def from_dataframe(cls, df, info=None):
+        name = df.iloc[0]['dataset_name']
+        ID = df.iloc[0]['dataset_id']
+        size, nfiles, nevents, format = None, None, None, None
+        if info is not None:
+            size = info['dsize']
+            nfiles = info['nfiles']
+            nevents = info['devts']
+            format = info['tier']
+        return cls(name=name, ID=ID, size=size, nfiles=nfiles, nevents=nevents, format=format, df=df)
 
     def get_history(self, freq='M'):
         history = {}
@@ -56,7 +62,7 @@ class Dataset:
             if start_date <= dt.date() <= end_date:
                 data[dt] = [{'node/site': n,
                              'number of data blocks': history[dt][n]['number of data blocks'],
-                             'total data fraction': round(history[dt][n]['total data fraction'] / self.totsize, 4)}
+                             'total data fraction': round(history[dt][n]['total data fraction'] / self.size, 4)}
                             for n in history[dt]]
         df = pd.concat({dt.strftime('%Y-%m-%d'): pd.DataFrame(data[dt])
                         for dt in sorted(list(data.keys()))})
