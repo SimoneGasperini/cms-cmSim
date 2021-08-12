@@ -1,7 +1,3 @@
-import numpy as np
-import pandas as pd
-
-
 def get_sites(df, tier=None, country=None):
     tier = tier + '_' if tier is not None else ''
     country = '_' + country + '_' if country is not None else ''
