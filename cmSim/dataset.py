@@ -1,3 +1,4 @@
+from datetime import time
 import pandas as pd
 
 
@@ -116,20 +117,13 @@ class Dataset:
         pandas.DataFrame
             Dataframe representing the dataset's storage history
         """
-        history = {}
-        for _, row in self.df.iterrows():
-            for dt in pd.date_range(start=row['min_time'], end=row['max_time'], freq=freq):
-                node = row['node_name']
-                d = {'number of data blocks': 0, 'total data fraction': 0.}
-                history.setdefault(dt, {}).setdefault(node, d)
-                history[dt][node]['number of data blocks'] += 1
-                history[dt][node]['total data fraction'] += row['rep_size']
         data = {}
-        for dt in history:
-            data[dt] = [{'node/site': n,
-                         'number of data blocks': history[dt][n]['number of data blocks'],
-                         'total data fraction': round(history[dt][n]['total data fraction'] / self.size, 4)}
-                        for n in history[dt]]
-        df = pd.concat({dt.strftime('%Y-%m-%d'): pd.DataFrame(data[dt])
-                        for dt in sorted(list(data.keys()))})
-        return df
+        for date in pd.date_range(start=self.df['min_time'].min(), end=self.df['max_time'].max(), freq=freq):
+            df = self.df[(date >= self.df['min_time'])
+                         & (date <= self.df['max_time'])]
+            df_data = [[site, (df['node_name'] == site).sum(),
+                        round(df[df['node_name'] == site]['rep_size'].sum() / self.size, 3)]
+                       for site in df['node_name'].unique()]
+            data[date] = pd.DataFrame(data=df_data,
+                                      columns=['site', '# data blocks', 'data fraction'])
+        return pd.concat(data)
