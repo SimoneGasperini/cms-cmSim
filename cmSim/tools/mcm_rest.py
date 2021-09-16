@@ -39,7 +39,7 @@ class McM:
 if __name__ == '__main__':
 
     mcm = McM()
-    name = '/ZJetsToNuNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16RECOAPV-106X_mcRun2_asymptotic_preVFP_v8-v3/AODSIM'
+    name = '/SingleElectronPt35/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM'
     result = mcm.get_by_dataset_name(name)
     print(f'RESULT KEYS = {list(result.keys())}')
 
