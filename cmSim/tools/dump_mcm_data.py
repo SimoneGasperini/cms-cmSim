@@ -6,6 +6,7 @@ import pandas as pd
 
 from functools import reduce
 from cmSim.tools.mcm_rest import McM
+from cmSim.tools.zipping import dump_zipped_json
 
 
 def read_df_chunks(inputfile, chunksize):
@@ -33,14 +34,17 @@ def write_json_parts(df_chunks, dirpath, idx_start=0):
         print(f'Elapsed time to process {len(df_chunks[idx])} rows: {elapsed}')
 
 
-def write_json_full(outputfile, tempdir):
+def write_json_full(outputfile, tempdir, zipped=False):
     dicts = []
     for filename in sorted(os.listdir(tempdir)):
         with open(tempdir+filename, mode='r') as file:
             dicts.append(json.load(file))
     data = reduce(lambda d1, d2: {**d1, **d2}, dicts)
-    with open(outputfile, mode='w') as file:
-        json.dump(data, file, indent=4)
+    if zipped:
+        dump_zipped_json(data, outputfile)
+    else:
+        with open(outputfile, mode='w') as file:
+            json.dump(data, file, indent=4)
 
 
 if __name__ == '__main__':
@@ -48,10 +52,10 @@ if __name__ == '__main__':
     dir = './../../data/'
     tempdir = dir + 'temp/'
     inputfile = dir + 'dataset_size_info.parquet'
-    outputfile = dir + 'mcm_dump.json'
+    outputfile = dir + 'zip_mcm_dump.json'
 
     df_chunks = read_df_chunks(inputfile, chunksize=4000)
     if not os.path.exists(tempdir):
         os.makedirs(tempdir)
     write_json_parts(df_chunks, dirpath=tempdir)
-    write_json_full(outputfile, tempdir=tempdir)
+    write_json_full(outputfile, tempdir=tempdir, zipped=True)
