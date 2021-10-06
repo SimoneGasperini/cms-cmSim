@@ -24,7 +24,8 @@ COUNTRIES_CODE_TO_NAME = \
         'CN': 'China',
         'TW': 'Taiwan',
         'KR': 'South Korea',
-        'MY': 'Malaysia'
+        'MY': 'Malaysia',
+        'TH': 'Thailand'
     }
 
 

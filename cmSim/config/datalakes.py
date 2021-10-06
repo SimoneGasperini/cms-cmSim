@@ -49,7 +49,8 @@ DATALAKE_TO_COUNTRIES = \
             'India',
             'China',
             'Malaysia',
-            'Pakistan'
+            'Pakistan',
+            'Thailand'
         }
     }
 
