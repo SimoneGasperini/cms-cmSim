@@ -44,15 +44,24 @@ def get_countries():
 
 
 def get_pags():
-    return set(PWGs['PAGs'].keys())
+    pags = set(PWGs['PAGs'].keys())
+    for pwg in PWGs_TO_MERGE:
+        pags.discard(pwg)
+    return pags
 
 
 def get_pogs():
-    return set(PWGs['POGs'].keys())
+    pogs = set(PWGs['POGs'].keys())
+    for pwg in PWGs_TO_MERGE:
+        pogs.discard(pwg)
+    return pogs
 
 
 def get_dpgs():
-    return set(PWGs['DPGs'].keys())
+    dpgs = set(PWGs['DPGs'].keys())
+    for pwg in PWGs_TO_MERGE:
+        dpgs.discard(pwg)
+    return dpgs
 
 
 def merge_pwgs_in_dataframe(df):
