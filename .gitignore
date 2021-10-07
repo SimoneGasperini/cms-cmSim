@@ -131,6 +131,9 @@ dmypy.json
 # Vscode
 .vscode/
 
-# Custom settings
+# PyCharm
 .idea
+
+# Custom settings
 data/
+plots/
