@@ -1,4 +1,4 @@
-COUNTRIES_CODE_TO_NAME = \
+COUNTRY_CODE_TO_COUNTRY_NAME = \
     {
         'CH': 'Switzerland',
         'IT': 'Italy',
@@ -29,5 +29,5 @@ COUNTRIES_CODE_TO_NAME = \
     }
 
 
-COUNTRIES_NAME_TO_CODE = {name: code
-                          for code, name in COUNTRIES_CODE_TO_NAME.items()}
+COUNTRY_NAME_TO_COUNTRY_CODE = {name: code
+                                for code, name in COUNTRY_CODE_TO_COUNTRY_NAME.items()}

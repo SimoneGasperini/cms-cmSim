@@ -1,8 +1,8 @@
 # reference: https://twiki.cern.ch/twiki/bin/view/CMSPublic/PhysicsResultsConveners#Physics_and_Detector_Performance
 
-PWGs = \
+PWGS = \
     {
-        'PAGs':  # Physics Analysis Groups
+        'pags':  # Physics Analysis Groups
         {
             'SMP': 'Standard Model',
             'TOP': 'Top Physics',
@@ -15,7 +15,7 @@ PWGs = \
             'B2G': 'Beyond Two Generations'
         },
 
-        'POGs':  # Physics Object Groups
+        'pogs':  # Physics Object Groups
         {
             'TRK': 'Tracking',
             'BTV': 'Btag and vertexing',
@@ -29,7 +29,7 @@ PWGs = \
             'UPG': 'Upgrade Studies'
         },
 
-        'DPGs':  # Detector Performance Groups
+        'dpgs':  # Detector Performance Groups
         {
             'TRACKER': 'Tracker',
             'ECAL': 'ECAL',
@@ -54,15 +54,28 @@ PWGs = \
             'PPS': 'Precision Proton Spectrometer',
             'QCD': 'Quantum Chromo-Dynamics',  # merged with SMP
             'TSG': 'Trigger Studies',
-            'CPF': '?',
-            'None': '?'
+            'CPF': '???'
         }
     }
 
 
-PWGs_TO_MERGE = \
+PWGS_TO_MERGE = \
     {
         'FSQ': 'SMP',
         'FWD': 'SMP',
         'QCD': 'SMP'
+    }
+
+
+PAG_TO_COLOR = \
+    {
+        'SMP': 'tab:blue',
+        'TOP': 'tab:orange',
+        'BPH': 'tab:green',
+        'HIG': 'tab:red',
+        'SUS': 'tab:olive',
+        'EXO': 'tab:pink',
+        'HIN': 'tab:cyan',
+        'B2G': 'tab:brown',
+        'None': 'black'
     }
