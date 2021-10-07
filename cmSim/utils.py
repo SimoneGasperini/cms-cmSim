@@ -5,6 +5,8 @@ from cmSim.config.datalakes import DATALAKE_TO_COUNTRIES, COUNTRY_TO_DATALAKE
 from cmSim.config.pwgs import PWGs, PWGs_TO_MERGE
 from cmSim.config.physics import KEYWORD_TO_PARTICLE, KEYWORD_TO_PAG
 
+from cmSim.tools.zipping import load_zipped_json
+
 
 def get_countryName_from_countryCode(code):
     if code in COUNTRIES_CODE_TO_NAME:
@@ -32,6 +34,19 @@ def get_datalake_from_country(country):
         return COUNTRY_TO_DATALAKE[country]
     else:
         raise KeyError(f'The country "{country}" is not valid!')
+
+
+def get_mcm_data(filepath):
+    print('Reading zipped json file... ', end='')
+    mcm_data = load_zipped_json(filepath)
+    print('Done', flush=True)
+    return mcm_data
+
+
+def assign_pwg_to_dataset(dataset, mcm_data):
+    if dataset not in mcm_data:
+        return 'None'
+    return mcm_data[dataset].get('pwg', 'None')
 
 
 def get_country_by_site(site):
