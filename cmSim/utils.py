@@ -42,6 +42,11 @@ def get_countryCode_from_countryName(name):
 # Utils functions to manage datalakes(groups of countries)
 ##########################################################
 
+def get_datalakes():
+    datalakes = list(DATALAKE_TO_COUNTRIES.keys())
+    return datalakes
+
+
 def get_countries_in_datalake(datalake):
     if datalake in DATALAKE_TO_COUNTRIES:
         countries = DATALAKE_TO_COUNTRIES[datalake]
@@ -54,6 +59,12 @@ def get_datalake_from_country(country):
         datalake = COUNTRY_TO_DATALAKE[country]
         return datalake
     raise KeyError(f'The country "{country}" is not valid!')
+
+
+def get_datalake_from_site(site):
+    country = get_country_from_site(site)
+    datalake = get_datalake_from_country(country)
+    return datalake
 
 
 ########################################################
@@ -95,7 +106,7 @@ def get_pwgName_from_pwgCode(code):
     raise KeyError(f'The PWG code "{code}" is not valid!')
 
 
-def assign_pwg_to_dataset(dataset, mcm_data):
+def get_pwg_from_dataset(dataset, mcm_data):
     if dataset not in mcm_data:
         return 'None'
     if 'pwg' not in mcm_data[dataset]:
