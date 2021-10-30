@@ -1,5 +1,4 @@
 import pandas as pd
-import pylab as plt
 from datetime import date
 from cmSim import utils
 
@@ -76,4 +75,3 @@ class Base:
         ax.stackplot(timeline, data, labels=labels, colors=colors)
         ax.set_title(self.__repr__(), fontsize=20)
         self._plot_settings(ax=ax)
-        plt.show()

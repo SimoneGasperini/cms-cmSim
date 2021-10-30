@@ -1,5 +1,4 @@
 import pandas as pd
-import pylab as plt
 from datetime import date
 from cmSim._base import Base
 from cmSim import utils
@@ -101,7 +100,6 @@ class DataContainer(Base):
         tiers = 'T1-T2' if tier is None else tier
         ax.set_title(f'Data storage by sites (tiers={tiers})', fontsize=20)
         self._plot_settings(ax=ax)
-        plt.show()
 
     def plot_storage_history_in_countries(self, ax, tier=None, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         """
@@ -136,7 +134,6 @@ class DataContainer(Base):
         tiers = 'T1-T2' if tier is None else tier
         ax.set_title(f'Data storage by countries (tiers={tiers})', fontsize=20)
         self._plot_settings(ax=ax)
-        plt.show()
 
     def plot_storage_history_in_datalakes(self, ax, tier=None, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         """
@@ -170,7 +167,6 @@ class DataContainer(Base):
         tiers = 'T1-T2' if tier is None else tier
         ax.set_title(f'Data storage by datalakes (tiers={tiers})', fontsize=20)
         self._plot_settings(ax=ax)
-        plt.show()
 
     def plot_storage_history_by_pag(self):
         raise NotImplementedError

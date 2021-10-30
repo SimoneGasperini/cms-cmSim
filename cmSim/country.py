@@ -1,5 +1,4 @@
 import pandas as pd
-import pylab as plt
 from datetime import date
 from cmSim._base import Base
 from cmSim import utils
@@ -125,4 +124,3 @@ class Country(Base):
         ax.stackplot(timeline, data, labels=sites)
         ax.set_title(self.__repr__(), fontsize=20)
         self._plot_settings(ax=ax)
-        plt.show()
