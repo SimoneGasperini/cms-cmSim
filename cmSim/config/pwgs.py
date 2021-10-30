@@ -76,6 +76,5 @@ PAG_TO_COLOR = \
         'SUS': 'tab:olive',
         'EXO': 'tab:pink',
         'HIN': 'tab:cyan',
-        'B2G': 'tab:brown',
-        'None': 'black'
+        'B2G': 'tab:brown'
     }
