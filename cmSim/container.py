@@ -121,8 +121,8 @@ class DataContainer(Base):
             Timeline frequency (month: 'M', week: 'W', etc), by default 'W'
         """
         df = self._filter_by_tier(self.data, tier)
-        countries = list(df['node_name'].unique().apply(
-            utils.get_country_from_site))
+        countries = list(set(utils.get_country_from_site(site)
+                             for site in df['node_name'].unique()))
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
         data = []
         for country in countries:
