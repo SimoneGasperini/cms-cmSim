@@ -26,11 +26,12 @@ class Base:
         return storage_history
 
     @staticmethod
-    def _plot_settings(ax):
+    def _plot_settings(ax, legend=True):
         ax.set_xlabel('time', fontsize=16)
         ax.set_ylabel('data stored on disk [B]', fontsize=16)
         ax.tick_params(axis='both', labelsize=14)
-        ax.legend(loc='best', fontsize=14)
+        if legend:
+            ax.legend(loc='best', fontsize=14)
         ax.grid(linestyle='dotted')
 
     def plot_storage_history_by_pag(self, ax, datatier=None, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
