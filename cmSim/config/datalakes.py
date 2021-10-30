@@ -32,13 +32,9 @@ DATALAKE_TO_COUNTRIES = \
             'Russia'
         },
 
-        'USA':
+        'USA + Brazil':
         {
-            'USA'
-        },
-
-        'Brazil':
-        {
+            'USA',
             'Brazil'
         },
 
