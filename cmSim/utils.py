@@ -1,6 +1,4 @@
 import re
-import numpy as np
-import pylab as plt
 
 from cmSim.config.countries import COUNTRY_CODE_TO_COUNTRY_NAME, COUNTRY_NAME_TO_COUNTRY_CODE
 from cmSim.config.datalakes import DATALAKE_TO_COUNTRIES, COUNTRY_TO_DATALAKE
@@ -8,10 +6,6 @@ from cmSim.config.pwgs import PWGS, PWGS_TO_MERGE, PAG_TO_COLOR
 from cmSim.config.physics import KEYWORD_TO_PARTICLE, KEYWORD_TO_PAG
 from cmSim.tools.zipping import load_zipped_json
 
-
-#####################################
-# Utils functions to manage countries
-#####################################
 
 def get_countries():
     countries = list(COUNTRY_NAME_TO_COUNTRY_CODE.keys())
@@ -38,10 +32,6 @@ def get_countryCode_from_countryName(name):
     raise KeyError(f'The country name "{name}" is not valid!')
 
 
-##########################################################
-# Utils functions to manage datalakes(groups of countries)
-##########################################################
-
 def get_datalakes():
     datalakes = list(DATALAKE_TO_COUNTRIES.keys())
     return datalakes
@@ -67,10 +57,6 @@ def get_datalake_from_site(site):
     return datalake
 
 
-########################################################
-# Utils functions to manage PWGs(Physics Working Groups)
-########################################################
-
 def get_pwgs(group=None):
     all_groups = list(PWGS.keys())
     if group is not None and group not in all_groups:
@@ -85,17 +71,12 @@ def get_pwgs(group=None):
     return pwgs
 
 
-def get_pwgs_colors():
-    pwgs_colors = PAG_TO_COLOR
-    all_groups = list(PWGS.keys())
-    all_groups.remove('pags')
-    for grp in all_groups:
-        pwgs = get_pwgs(group=grp)
-        cmap = plt.get_cmap('gist_rainbow')
-        linspace = np.linspace(0., 1., len(pwgs))
-        for pwg, x in zip(pwgs, linspace):
-            pwgs_colors[pwg] = cmap(x)
-    return pwgs_colors
+def get_pag_to_color(others=None):
+    pag_to_color = PAG_TO_COLOR
+    if others is not None:
+        for key in others:
+            pag_to_color[key] = others[key]
+    return pag_to_color
 
 
 def get_pwgName_from_pwgCode(code):
@@ -118,15 +99,11 @@ def get_pwg_from_dataset(dataset, mcm_data):
 
 
 def get_mcm_data(filepath):
-    print('Reading zipped json file... ', end='')
+    print('Unzipping and loading json file... ', end='')
     mcm_data = load_zipped_json(filepath)
     print('Done', flush=True)
     return mcm_data
 
-
-###########################################################################
-# Utils functions implementing the algorithm to guess pag from dataset name
-###########################################################################
 
 def guess_pag_from_name(dataset_name):
     # reference: https://opendata.cern.ch/docs/cms-simulated-dataset-names
