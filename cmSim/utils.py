@@ -12,6 +12,11 @@ def get_countries():
     return countries
 
 
+def get_tier_from_site(site):
+    tier = site.split('_')[0]
+    return tier
+
+
 def get_country_from_site(site):
     code = site.split('_')[1]
     country = get_countryName_from_countryCode(code)
