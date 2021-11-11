@@ -49,13 +49,13 @@ def write_json_full(outputfile, tempdir, zipped=False):
 
 if __name__ == '__main__':
 
-    dir = './../../data/'
-    tempdir = dir + 'temp/'
-    inputfile = dir + 'dataset_size_info.parquet'
-    outputfile = dir + 'zip_mcm_dump.json'
+    tempdir = './../data/temp/'
+    inputfile = './../data/dataset_size_info.parquet'
+    outputfile = './../data/zip_mcm_dump.json'
 
-    df_chunks = read_df_chunks(inputfile, chunksize=4000)
     if not os.path.exists(tempdir):
         os.makedirs(tempdir)
+
+    df_chunks = read_df_chunks(inputfile, chunksize=4000)
     write_json_parts(df_chunks, dirpath=tempdir)
     write_json_full(outputfile, tempdir=tempdir, zipped=True)
