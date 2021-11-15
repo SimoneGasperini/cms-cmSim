@@ -4,7 +4,7 @@ from cmSim._base import Base
 from cmSim import utils
 
 
-def get_datasets(df, pwg=None, datatier=None):
+def get_datasets(df, pwgs=None, datatiers=None):
     """
     Return a list of datasets names applying the optional filters (by PWG and/or by datatier)
     to the given input dataframe.
@@ -13,10 +13,10 @@ def get_datasets(df, pwg=None, datatier=None):
     ----------
     df : pandas.DataFrame
         Input dataframe
-    pwg : str, optional
-        PWG to be considered (if None, all are taken), by default None
-    datatier : str, optional
-        Datatier to be considered (if None, all are taken), by default None
+    pwgs : List[str], optional
+        PWGs to be considered (if None, all are taken), by default None
+    datatiers : List[str], optional
+        Datatiers to be considered (if None, all are taken), by default None
 
     Returns
     -------
@@ -24,10 +24,10 @@ def get_datasets(df, pwg=None, datatier=None):
         List of the selected datasets names
     """
     grouped_df = df.groupby('dataset_name').first()
-    if pwg is not None:
-        grouped_df = grouped_df[grouped_df['pwg'] == pwg]
-    if datatier is not None:
-        grouped_df = grouped_df[grouped_df['tier'] == datatier]
+    if pwgs is not None:
+        grouped_df = grouped_df[grouped_df['pwg'].isin(pwgs)]
+    if datatiers is not None:
+        grouped_df = grouped_df[grouped_df['tier'].isin(datatiers)]
     datasets = list(grouped_df.index)
     return datasets
 
@@ -49,24 +49,25 @@ class DataContainer(Base):
         self.data = data
 
     @classmethod
-    def from_dataframe(cls, datasets, df):
+    def from_dataframe(cls, df, datasets=None):
         """
         Return the DataContainer object created filtering data in the given dataframe.
 
         Parameters
         ----------
-        datasets : List[str]
-            List of datasets names
         df : pandas.DataFrame, optional
             Input dataframe
+        datasets : List[str], optional
+            List of datasets names (if None, all are taken), by default None
 
         Returns
         -------
         container : DataContainer
             DataContainer object
         """
-        df_datasets = df[df['dataset_name'].isin(datasets)]
-        container = cls(datasets=datasets, data=df_datasets)
+        if datasets is not None:
+            df = df[df['dataset_name'].isin(datasets)]
+        container = cls(datasets=datasets, data=df)
         return container
 
     def plot_storage_history_in_sites(self, ax, tier=None, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
@@ -169,6 +170,3 @@ class DataContainer(Base):
         tiers = 'T1-T2' if tier is None else tier
         ax.set_title(f'Data storage by datalakes (tiers={tiers})', fontsize=20)
         self._plot_settings(ax=ax)
-
-    def plot_storage_history_by_pag(self):
-        raise NotImplementedError
