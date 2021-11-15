@@ -1,10 +1,10 @@
 import re
+from cmSim.tools import zipping
 
 from cmSim.config.countries import COUNTRY_CODE_TO_COUNTRY_NAME, COUNTRY_NAME_TO_COUNTRY_CODE
 from cmSim.config.datalakes import DATALAKE_TO_COUNTRIES, COUNTRY_TO_DATALAKE
-from cmSim.config.pwgs import PWGS, PWGS_TO_MERGE, PAG_TO_COLOR
+from cmSim.config.pwgs import PWGS, PWGS_TO_MERGE
 from cmSim.config.physics import KEYWORD_TO_PARTICLE, KEYWORD_TO_PAG
-from cmSim.tools.zipping import load_zipped_json
 
 
 def get_countries():
@@ -76,14 +76,6 @@ def get_pwgs(group=None):
     return pwgs
 
 
-def get_pag_to_color(others=None):
-    pag_to_color = PAG_TO_COLOR
-    if others is not None:
-        for key in others:
-            pag_to_color[key] = others[key]
-    return pag_to_color
-
-
 def get_pwgName_from_pwgCode(code):
     for grp in list(PWGS.keys()):
         pwg_name = PWGS[grp].get(code, None)
@@ -95,17 +87,44 @@ def get_pwgName_from_pwgCode(code):
 def get_pwg_from_dataset(dataset, mcm_data):
     if dataset not in mcm_data:
         return 'None'
-    if 'pwg' not in mcm_data[dataset]:
-        return 'None'
     pwg = mcm_data[dataset]['pwg']
     if pwg in PWGS_TO_MERGE:
         pwg = PWGS_TO_MERGE[pwg]
     return pwg
 
 
+def get_pag_to_color():
+    pag_to_color = {
+        'SMP': 'tab:blue',
+        'TOP': 'tab:orange',
+        'BPH': 'tab:red',
+        'HIG': 'tab:green',
+        'SUS': 'tab:purple',
+        'EXO': 'tab:cyan',
+        'HIN': 'tab:olive',
+        'B2G': 'tab:brown',
+        'Other PWG': 'gray',
+        'Not found': 'black'}
+    return pag_to_color
+
+
+def get_datatier_to_color():
+    datatier_to_color = {
+        'RAW': 'tab:blue',
+        'RECO': 'tab:cyan',
+        'AOD': 'tab:green',
+        'MINIAOD': 'tab:purple',
+        'NANOAOD': 'tab:brown',
+        'AODSIM': 'tab:red',
+        'MINIAODSIM': 'tab:orange',
+        'NANOAODSIM': 'tab:olive',
+        'Other': 'gray'}
+    return datatier_to_color
+
+
 def get_mcm_data(filepath):
     print('Unzipping and loading json file... ', end='')
-    mcm_data = load_zipped_json(filepath)
+    mcm_data = zipping.load_zipped_json(filepath)
     print('Done', flush=True)
     return mcm_data
 
