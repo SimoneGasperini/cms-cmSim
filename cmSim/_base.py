@@ -19,6 +19,28 @@ class Base:
                 for date in timeline]
 
     def plot_storage_history_by_datatier(self, ax, datatiers, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
+        """
+        Draw a stacked area plot representing the time series of data stored on disk (grouped by
+        datatier) over the given time period (from 'date1' to 'date2' with intervals given by 'freq').
+        The data are filtered considering only replicas stored in sites belonging to the specified 'tier'.
+
+        Parameters
+        ----------
+        ax : matplotlib.axes
+            Matplotlib axes on which to draw the plot
+        datatiers : List[str]
+            Datatiers to be considered in the grouping
+        tier : str, optional
+            Tier to be considered (if None, all are taken), by default None
+        norm : bool, optional
+            If True, apply normalization, by default False
+        date1 : datetime.date, optional
+            Timeline starting date, by default date(2019, 1, 1)
+        date2: datetime.date, optional
+            Timeline ending date, by default date(2020, 12, 31)
+        freq : str, optional
+            Timeline frequency (month: 'M', week: 'W', etc), by default 'W'
+        """
         df = self._filter_by_tier(self.data, tier)
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
         time_series = []
@@ -33,17 +55,42 @@ class Base:
         more_labels = ['Other']
         labels = datatiers + more_labels
         if norm:
-            time_series = plotting.norm_stacked_areas(time_series=time_series)
-        time_series, sorted_labels = plotting.sort_stacked_areas(time_series=time_series,
-                                                                 labels=datatiers, more_labels=more_labels)
-        sorted_colors = plotting.get_colors(labels=sorted_labels,
-                                            groups='datatiers')
+            time_series = plotting.norm_stacked_areas(time_series)
+            ylabel = 'Data fraction'
+        else:
+            ylabel = 'Data amount [B]'
+        time_series, sorted_labels = plotting.sort_stacked_areas(
+            time_series=time_series, labels=datatiers, more_labels=more_labels)
+        sorted_colors = plotting.get_colors(
+            labels=sorted_labels, groups='datatiers')
         ax.stackplot(timeline, time_series,
                      labels=sorted_labels, colors=sorted_colors)
-        plotting.set_stackplot_settings(ax, ylabel='Data fraction' if norm else 'Data amount [B]',
-                                        legend_title='Data-tiers', legend_labels=labels)
+        plotting.set_stackplot_settings(
+            ax, ylabel=ylabel, legend_title='Data-tiers', legend_labels=labels)
 
     def plot_storage_history_by_pag(self, ax, pags, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
+        """
+        Draw a stacked area plot representing the time series of data stored on disk (grouped by PAG)
+        over the given time period (from 'date1' to 'date2' with intervals given by 'freq').
+        The data are filtered considering only replicas stored in sites belonging to the specified 'tier'.
+
+        Parameters
+        ----------
+        ax : matplotlib.axes
+            Matplotlib axes on which to draw the plot
+        pags : List[str]
+            PAGs to be considered in the grouping
+        tier : str, optional
+            Tier to be considered (if None, all are taken), by default None
+        norm : bool, optional
+            If True, apply normalization, by default False
+        date1 : datetime.date, optional
+            Timeline starting date, by default date(2019, 1, 1)
+        date2: datetime.date, optional
+            Timeline ending date, by default date(2020, 12, 31)
+        freq : str, optional
+            Timeline frequency (month: 'M', week: 'W', etc), by default 'W'
+        """
         df = self._filter_by_tier(self.data, tier)
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
         time_series = []
@@ -62,12 +109,15 @@ class Base:
         more_labels = ['Other PWG', 'Not found']
         labels = pags + more_labels
         if norm:
-            time_series = plotting.norm_stacked_areas(time_series=time_series)
-        time_series, sorted_labels = plotting.sort_stacked_areas(time_series=time_series,
-                                                                 labels=pags, more_labels=more_labels)
-        sorted_colors = plotting.get_colors(labels=sorted_labels,
-                                            groups='pags')
+            time_series = plotting.norm_stacked_areas(time_series)
+            ylabel = 'Data fraction'
+        else:
+            ylabel = 'Data amount [B]'
+        time_series, sorted_labels = plotting.sort_stacked_areas(
+            time_series=time_series, labels=pags, more_labels=more_labels)
+        sorted_colors = plotting.get_colors(
+            labels=sorted_labels, groups='pags')
         ax.stackplot(timeline, time_series,
                      labels=sorted_labels, colors=sorted_colors)
-        plotting.set_stackplot_settings(ax, ylabel='Data fraction' if norm else 'Data amount [B]',
-                                        legend_title='PAGs', legend_labels=labels)
+        plotting.set_stackplot_settings(
+            ax, ylabel=ylabel, legend_title='PAGs', legend_labels=labels)
