@@ -18,7 +18,7 @@ class Base:
         return [df[(df['min_time'] <= date) & (date <= df['max_time'])]['rep_size'].sum()
                 for date in timeline]
 
-    def plot_storage_history_by_datatier(self, ax, datatiers, title, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
+    def plot_storage_history_by_datatier(self, ax, datatiers, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         df = self._filter_by_tier(self.data, tier)
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
         time_series = []
@@ -40,10 +40,10 @@ class Base:
                                             groups='datatiers')
         ax.stackplot(timeline, time_series,
                      labels=sorted_labels, colors=sorted_colors)
-        plotting.set_stackplot_settings(ax, title=title, ylabel='Data fraction' if norm else 'Data amount [B]',
+        plotting.set_stackplot_settings(ax, ylabel='Data fraction' if norm else 'Data amount [B]',
                                         legend_title='Data-tiers', legend_labels=labels)
 
-    def plot_storage_history_by_pag(self, ax, pags, title, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
+    def plot_storage_history_by_pag(self, ax, pags, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         df = self._filter_by_tier(self.data, tier)
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
         time_series = []
@@ -69,5 +69,5 @@ class Base:
                                             groups='pags')
         ax.stackplot(timeline, time_series,
                      labels=sorted_labels, colors=sorted_colors)
-        plotting.set_stackplot_settings(ax, title=title, ylabel='Data fraction' if norm else 'Data amount [B]',
+        plotting.set_stackplot_settings(ax, ylabel='Data fraction' if norm else 'Data amount [B]',
                                         legend_title='PAGs', legend_labels=labels)

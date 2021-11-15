@@ -28,9 +28,8 @@ def get_colors(labels, groups):
     return colors
 
 
-def set_stackplot_settings(ax, title, ylabel, legend_title, legend_labels):
+def set_stackplot_settings(ax, ylabel, legend_title, legend_labels):
     ax.tick_params(axis='both', labelsize=14)
-    ax.set_title(title, fontsize=20)
     ax.set_ylabel(ylabel, fontsize=18)
     handles, labels = _sort_legend_labels(ax, legend_labels)
     ax.legend(handles, labels, title=legend_title, title_fontsize=18,
