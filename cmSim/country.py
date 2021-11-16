@@ -2,6 +2,7 @@ import pandas as pd
 from datetime import date
 from cmSim._base import Base
 from cmSim import utils
+from cmSim.tools import plotting
 
 
 class Country(Base):
@@ -94,18 +95,20 @@ class Country(Base):
                     if 'T2_' in site]
         return t2_sites
 
-    def plot_storage_history_by_site(self, ax, datatier=None, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
+    def plot_storage_history_by_site(self, ax, datatiers=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         """
         Draw a stacked area plot representing the time series of data amout stored on disk in the
         country (grouped by site) over the given time period (from 'date1' to 'date2' with intervals
-        given by 'freq'). The data are filtered considering only the specified 'datatier'.
+        given by 'freq'). The data are filtered considering only datasets of the specified 'datatiers'.
 
         Parameters
         ----------
         ax : matplotlib.axes
             Matplotlib axes on which to draw the plot
-        datatier : str, optional
-            Datatier to be considered (if None, all are taken), by default None
+        datatiers : List[str], optional
+            Datatiers to be considered (if None, all are taken), by default None
+        norm : bool, optional
+            If True, apply normalization, by default False
         date1 : datetime.date, optional
             Timeline starting date, by default date(2019, 1, 1)
         date2: datetime.date, optional
@@ -114,13 +117,20 @@ class Country(Base):
             Timeline frequency (month: 'M', week: 'W', etc), by default 'W'
         """
         sites = self.t1_sites + self.t2_sites
-        df = self._filter_by_datatier(self.data, datatier)
+        df = self._filter_by_datatiers(self.data, datatiers)
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
-        data = []
+        time_series = []
         for site in sites:
             dframe = df[df['node_name'] == site]
             storage_history = self._get_storage_history(dframe, timeline)
-            data.append(storage_history)
-        ax.stackplot(timeline, data, labels=sites)
-        ax.set_title(self.__repr__(), fontsize=20)
-        self._plot_settings(ax=ax)
+            time_series.append(storage_history)
+        if norm:
+            time_series = plotting.norm_stacked_areas(time_series)
+            ylabel = 'Data fraction'
+        else:
+            ylabel = 'Data amount [B]'
+        time_series, labels = plotting.sort_stacked_areas(
+            time_series=time_series, labels=sites)
+        ax.stackplot(timeline, time_series, labels=labels)
+        plotting.set_stackplot_settings(
+            ax, ylabel=ylabel, legend_title='Sites', legend_labels=sites)
