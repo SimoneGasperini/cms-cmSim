@@ -9,7 +9,7 @@ def norm_stacked_areas(time_series):
     return normed_time_series
 
 
-def sort_stacked_areas(time_series, labels, more_labels):
+def sort_stacked_areas(time_series, labels, more_labels=[]):
     time_series = np.array(time_series)
     labels = np.array(labels)
     l = len(labels)
