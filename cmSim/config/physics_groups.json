@@ -1,0 +1,173 @@
+{
+    "PAGs": {
+        "SMP": {
+            "name": "Standard Model",
+            "code": "SMP",
+            "color": "tab:blue"
+        },
+        "TOP": {
+            "name": "Top Physics",
+            "code": "TOP",
+            "color": "tab:orange"
+        },
+        "BPH": {
+            "name": "B Physics",
+            "code": "BPH",
+            "color": "tab:red"
+        },
+        "FSQ": {
+            "name": "Forward & Small-x QCD",
+            "code": "FSQ",
+            "merged_with": "SMP"
+        },
+        "HIG": {
+            "name": "Higgs",
+            "code": "HIG",
+            "color": "tab:green"
+        },
+        "SUS": {
+            "name": "Susy",
+            "code": "SUS",
+            "color": "tab:purple"
+        },
+        "EXO": {
+            "name": "Exotica",
+            "code": "EXO",
+            "color": "tab:cyan"
+        },
+        "HIN": {
+            "name": "Heavy Ions",
+            "code": "HIN",
+            "color": "tab:olive"
+        },
+        "B2G": {
+            "name": "Beyond Two Generations",
+            "code": "B2G",
+            "color": "tab:brown"
+        }
+    },
+    "POGs": {
+        "TRK": {
+            "name": "Tracking",
+            "code": "TRK"
+        },
+        "BTV": {
+            "name": "Btag and vertexing",
+            "code": "BTV"
+        },
+        "EGM": {
+            "name": "e-gamma",
+            "code": "EGM"
+        },
+        "JME": {
+            "name": "JetMet",
+            "code": "JME"
+        },
+        "LUM": {
+            "name": "Lumi",
+            "code": "LUM"
+        },
+        "MUO": {
+            "name": "Muon",
+            "code": "MUO"
+        },
+        "TAU": {
+            "name": "Tau",
+            "code": "TAU"
+        },
+        "PRO": {
+            "name": "Protons",
+            "code": "PRO"
+        },
+        "GEN": {
+            "name": "Generators",
+            "code": "GEN"
+        },
+        "UPG": {
+            "name": "Upgrade Studies",
+            "code": "UPG"
+        }
+    },
+    "DPGs": {
+        "TRACKER": {
+            "name": "Tracker",
+            "code": "TRACKER"
+        },
+        "ECAL": {
+            "name": "ECAL",
+            "code": "ECAL"
+        },
+        "HCA": {
+            "name": "HCAL",
+            "code": "HCA"
+        },
+        "MUON": {
+            "name": "Muon",
+            "code": "MUON"
+        },
+        "DT": {
+            "name": "Muon DT",
+            "code": "DT"
+        },
+        "CSC": {
+            "name": "Muon CSC",
+            "code": "CSC"
+        },
+        "RPC": {
+            "name": "Muon RPC",
+            "code": "RPC"
+        },
+        "GEM": {
+            "name": "Muon Gem",
+            "code": "GEM"
+        },
+        "L1T": {
+            "name": "Trigger L1",
+            "code": "L1T"
+        },
+        "BRIL": {
+            "name": "BRIL",
+            "code": "BRIL"
+        },
+        "CTPPS": {
+            "name": "CT-PPS",
+            "code": "CTPPS"
+        },
+        "HGC": {
+            "name": "HGCAL",
+            "code": "HGC"
+        },
+        "MDT": {
+            "name": "MTD",
+            "code": "MDT"
+        }
+    },
+    "Others": {
+        "EWK": {
+            "name": "Electroweak Physics",
+            "code": "EWK"
+        },
+        "FWD": {
+            "name": "Forward Physics",
+            "code": "FWD",
+            "merged_with": "SMP"
+        },
+        "PPD": {
+            "name": "Physics Performance & Dataset",
+            "code": "PPD"
+        },
+        "PPS": {
+            "name": "Precision Proton Spectrometer",
+            "code": "PPS"
+        },
+        "QCD": {
+            "name": "Quantum Chromo-Dynamics",
+            "code": "QCD",
+            "merged_with": "SMP"
+        },
+        "TSG": {
+            "name": "Trigger Studies",
+            "code": "TSG"
+        }
+    }
+}

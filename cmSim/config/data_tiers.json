@@ -1,0 +1,166 @@
+{
+    "ALCAPROMPT": {
+        "name": "ALCAPROMPT"
+    },
+    "ALCARECO": {
+        "name": "ALCARECO"
+    },
+    "AOD": {
+        "name": "AOD",
+        "color": "tab:green"
+    },
+    "AODSIM": {
+        "name": "AODSIM",
+        "color": "tab:red"
+    },
+    "DIGI-RECO": {
+        "name": "DIGI-RECO"
+    },
+    "DQM": {
+        "name": "DQM"
+    },
+    "DQMIO": {
+        "name": "DQMIO"
+    },
+    "DQMROOT": {
+        "name": "DQMROOT"
+    },
+    "FEVT": {
+        "name": "FEVT"
+    },
+    "FEVTDEBUGHLT": {
+        "name": "FEVTDEBUGHLT"
+    },
+    "FEVTHLTALL": {
+        "name": "FEVTHLTALL"
+    },
+    "GEN": {
+        "name": "GEN"
+    },
+    "GEN-RAW": {
+        "name": "GEN-RAW"
+    },
+    "GEN-RAWDEBUG": {
+        "name": "GEN-RAWDEBUG"
+    },
+    "GEN-SIM": {
+        "name": "GEN-SIM"
+    },
+    "GEN-SIM-DIGI": {
+        "name": "GEN-SIM-DIGI"
+    },
+    "GEN-SIM-DIGI-HLTDEBUG-RECO": {
+        "name": "GEN-SIM-DIGI-HLTDEBUG-RECO"
+    },
+    "GEN-SIM-DIGI-RAW": {
+        "name": "GEN-SIM-DIGI-RAW"
+    },
+    "GEN-SIM-DIGI-RAW-HLTDEBUG": {
+        "name": "GEN-SIM-DIGI-RAW-HLTDEBUG"
+    },
+    "GEN-SIM-DIGI-RAW-HLTDEBUG-RECO": {
+        "name": "GEN-SIM-DIGI-RAW-HLTDEBUG-RECO"
+    },
+    "GEN-SIM-DIGI-RAW-MINIAOD": {
+        "name": "GEN-SIM-DIGI-RAW-MINIAOD"
+    },
+    "GEN-SIM-DIGI-RAW-RECO": {
+        "name": "GEN-SIM-DIGI-RAW-RECO"
+    },
+    "GEN-SIM-DIGI-RECO": {
+        "name": "GEN-SIM-DIGI-RECO"
+    },
+    "GEN-SIM-DIGI-RECODEBUG": {
+        "name": "GEN-SIM-DIGI-RECODEBUG"
+    },
+    "GEN-SIM-RAW": {
+        "name": "GEN-SIM-RAW"
+    },
+    "GEN-SIM-RAW-HLT": {
+        "name": "GEN-SIM-RAW-HLT"
+    },
+    "GEN-SIM-RAW-HLTDEBUG": {
+        "name": "GEN-SIM-RAW-HLTDEBUG"
+    },
+    "GEN-SIM-RAW-HLTDEBUG-RECO": {
+        "name": "GEN-SIM-RAW-HLTDEBUG-RECO"
+    },
+    "GEN-SIM-RAW-HLTDEBUG-RECODEBUG": {
+        "name": "GEN-SIM-RAW-HLTDEBUG-RECODEBUG"
+    },
+    "GEN-SIM-RAW-RECO": {
+        "name": "GEN-SIM-RAW-RECO"
+    },
+    "GEN-SIM-RAWDEBUG": {
+        "name": "GEN-SIM-RAWDEBUG"
+    },
+    "GEN-SIM-RECO": {
+        "name": "GEN-SIM-RECO"
+    },
+    "GEN-SIM-RECODEBUG": {
+        "name": "GEN-SIM-RECODEBUG"
+    },
+    "LHE": {
+        "name": "LHE"
+    },
+    "MINIAOD": {
+        "name": "MINIAOD",
+        "color": "tab:purple"
+    },
+    "MINIAODSIM": {
+        "name": "MINIAODSIM",
+        "color": "tab:orange"
+    },
+    "NANOAOD": {
+        "name": "NANOAOD",
+        "color": "tab:brown"
+    },
+    "NANOAODSIM": {
+        "name": "NANOAODSIM",
+        "color": "tab:olive"
+    },
+    "NANOEDMAODSIM": {
+        "name": "NANOEDMAODSIM"
+    },
+    "PREMIX": {
+        "name": "PREMIX"
+    },
+    "PREMIX-RAW": {
+        "name": "PREMIX-RAW"
+    },
+    "PREMIXRAW": {
+        "name": "PREMIXRAW"
+    },
+    "RAW": {
+        "name": "RAW",
+        "color": "tab:blue"
+    },
+    "RAW-HLT": {
+        "name": "RAW-HLT"
+    },
+    "RAW-RECO": {
+        "name": "RAW-RECO"
+    },
+    "RAWAODSIM": {
+        "name": "RAWAODSIM"
+    },
+    "RAWDEBUG": {
+        "name": "RAWDEBUG"
+    },
+    "RAWRECOSIMHLT": {
+        "name": "RAWRECOSIMHLT"
+    },
+    "RECO": {
+        "name": "RECO",
+        "color": "tab:cyan"
+    },
+    "RECODEBUG": {
+        "name": "RECODEBUG"
+    },
+    "SIM": {
+        "name": "SIM"
+    },
+    "USER": {
+        "name": "USER"
+    }
+}

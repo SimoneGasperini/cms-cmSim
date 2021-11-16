@@ -1,0 +1,58 @@
+{
+    "Switzerland": {
+        "name": "Switzerland",
+        "color": "tab:blue",
+        "countries": [
+            "Switzerland"
+        ]
+    },
+    "West Europe": {
+        "name": "West Europe",
+        "color": "tab:red",
+        "countries": [
+            "Italy",
+            "Spain",
+            "Austria",
+            "Germany",
+            "United Kingdom",
+            "Belgium",
+            "Portugal",
+            "France"
+        ]
+    },
+    "East Europe": {
+        "name": "East Europe",
+        "color": "tab:orange",
+        "countries": [
+            "Finland",
+            "Estonia",
+            "Turkey",
+            "Ukraine",
+            "Hungary",
+            "Poland",
+            "Greece",
+            "Russia"
+        ]
+    },
+    "USA + Brazil": {
+        "name": "USA + Brazil",
+        "color": "tab:green",
+        "countries": [
+            "USA",
+            "Brazil"
+        ]
+    },
+    "Asia": {
+        "name": "Asia",
+        "color": "tab:cyan",
+        "countries": [
+            "Taiwan",
+            "South Korea",
+            "India",
+            "China",
+            "Malaysia",
+            "Pakistan",
+            "Thailand"
+        ]
+    }
+}

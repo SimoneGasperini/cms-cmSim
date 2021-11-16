@@ -1,0 +1,106 @@
+{
+    "Austria": {
+        "name": "Austria",
+        "code": "AT"
+    },
+    "Belgium": {
+        "name": "Belgium",
+        "code": "BE"
+    },
+    "Brazil": {
+        "name": "Brazil",
+        "code": "BR"
+    },
+    "China": {
+        "name": "China",
+        "code": "CH"
+    },
+    "Estonia": {
+        "name": "Estonia",
+        "code": "EE"
+    },
+    "Finland": {
+        "name": "Finland",
+        "code": "FI"
+    },
+    "France": {
+        "name": "France",
+        "code": "FR"
+    },
+    "Germany": {
+        "name": "Germany",
+        "code": "DE"
+    },
+    "Greece": {
+        "name": "Greece",
+        "code": "GR"
+    },
+    "Hungary": {
+        "name": "Hungary",
+        "code": "HU"
+    },
+    "India": {
+        "name": "India",
+        "code": "IN"
+    },
+    "Italy": {
+        "name": "Italy",
+        "code": "IT"
+    },
+    "Malaysia": {
+        "name": "Malaysia",
+        "code": "MY"
+    },
+    "Pakistan": {
+        "name": "Pakistan",
+        "code": "PK"
+    },
+    "Poland": {
+        "name": "Poland",
+        "code": "PL"
+    },
+    "Portugal": {
+        "name": "Portugal",
+        "code": "PT"
+    },
+    "Russia": {
+        "name": "Russia",
+        "code": "RU"
+    },
+    "South Korea": {
+        "name": "South Korea",
+        "code": "KR"
+    },
+    "Spain": {
+        "name": "Spain",
+        "code": "ES"
+    },
+    "Switzerland": {
+        "name": "Switzerland",
+        "code": "CH"
+    },
+    "Taiwan": {
+        "name": "Taiwan",
+        "code": "TW"
+    },
+    "Thailand": {
+        "name": "Thailand",
+        "code": "TH"
+    },
+    "Turkey": {
+        "name": "Turkey",
+        "code": "TR"
+    },
+    "USA": {
+        "name": "USA",
+        "code": "US"
+    },
+    "Ukraine": {
+        "name": "Ukraine",
+        "code": "UA"
+    },
+    "United Kingdom": {
+        "name": "United Kingdom",
+        "code": "UK"
+    }
+}
