@@ -10,8 +10,8 @@ class Base:
         return df[df['node_name'].str.startswith(tier)] if tier is not None else df
 
     @staticmethod
-    def _filter_by_datatier(df, datatier):
-        return df[df['tier'] == datatier] if datatier is not None else df
+    def _filter_by_datatiers(df, datatiers):
+        return df[df['tier'].isin(datatiers)] if datatiers is not None else df
 
     @staticmethod
     def _get_storage_history(df, timeline):
