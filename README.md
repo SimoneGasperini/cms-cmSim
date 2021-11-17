@@ -1,10 +1,13 @@
-# CMS Computing Model analysis and simulation
+# CMS computing model - Analysis and Simulation
 
 ## Table of contents:
 - ### [Introduction](#introduction)
-- ### [Installation](#toolkit-installation)
+- ### [Installation](#installation)
 - ### [Usage example](#usage-example)
+- ### [Repository structure](#repository-structure)
+- ### [Data structure](#data-structure)
 
+ ### __________________________________________________Link to data on _OneDrive_:  🠊 [CMS-cmSim/data](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/Eh5PN28-dPxMk8k6xOKacHsBAtPoEHkqk03jwOgqshaB5A?e=0CBqhg) 🠈
 
 
 ## Introduction
@@ -37,11 +40,9 @@ As an example about how to use the toolkit, suppose you want to investigate abou
 ```python
 import pandas as pd
 
-# reading data from parquet file
-df = pd.read_parquet('dataset_site_info.parquet')
-df.head(None)
+# reading data from local parquet file
+df = pd.read_parquet('<FILEPATH>/dataset_site_info.parquet')
 ```
-![dataframe](images/example_dataframe.png)
 
 ```python
 from cmSim.country import Country
@@ -65,3 +66,89 @@ fig, ax = plt.subplots(figsize=(16, 12))
 country.plot_storage_history_by_site(ax, norm=False)
 ```
 ![plot](images/example_plot.png)
+
+
+
+## Repository structure
+The repository structure is the following:
+
+- `cmSim\` 🠊 it is the main directory containing the source code (e.g. all the modules implementing classes used in data analysis and model simulation) together with general configurations and additional tools;
+
+    * `config\` 🠊 it contains the JSON files to handle the toolkit configurations and settings (e.g. how to group countries in distinct datalakes, which color to use for plotting data belonging to different data-tiers/working groups, ...);
+
+    * `tools\` 🠊 it contains the additional tools implemented to perform some specific tasks related to the project (e.g. perform parallel HTTP requests to the CMS Monte Carlo Management system using multithreading, automatically adjust plotting settings, ...);
+
+- `images\` 🠊 it simply contains the images displayed in README file or other kind of documentation;
+
+- `notebooks\` 🠊 it contains useful notebooks as working examples about how to use the toolkit but also to start exploring the data;
+
+- `scripts\` 🠊 it contains several ready-to-run scripts to perform specific tasks (e.g. split the big PARQUET in smaller files, generate some plots, ...).
+
+```
+.
+├── cmSim\
+│       ├── config\
+|       |       ├── countries.json
+|       |       ├── datalakes.json
+|       |       └── ...
+│       ├── tools\
+|       |       ├── mcm_rest.py
+|       |       ├── multithread.py
+|       |       └── ...
+|       ├── utils.py
+|       └── ...
+├── images\
+|       └── ...
+├── notebooks\
+|       └── ...
+├── scripts\
+|       └── ...
+├── .gitignore
+├── README.md
+├── requirements.txt
+└── setup.py
+```
+
+
+
+## Data structure
+All the data Several types of data structured in differernt ways are available:
+
+1) `dataset_site_info.parquet` contains the history about datasets stored on disk over the grid from the beginning of 2019 to the end of 2020. In particular, the dataframe columns structure is the following:
+    * "**dataset_name**": full name of the whole dataset
+    * "**dataset_id**": unique ID of the whole dataset
+    * "**replica_time_create**": creation date of the replica from the corresponding entire dataset
+    * "**node_name**": site (including tier and country) where the replica is stored
+    * "**rep_size**": replica size (in Bytes)
+    * from "**min_time**" to "**max_time**": time interval during which the replica is stored on disk in that site
+    * "**br_user_group_id**": ???
+    * "**tier**": dataset data-tier
+
+    ![df1](images/example_df1.png)
+
+    Since this file is quiet big, smaller PARQUET have been created filtering for each generated file only data belonging to specific data-tiers (_RAW_, _RECO_, _AOD/AODSIM_, _MINIAOD/MINIAODSIM_, _NANOAOD/NANOAODSIM_).\
+    The script written to do this job is available in the repository: [scripts\split_parquet_file.py](https://github.com/SimoneGasperini/cms-cmSim/blob/master/scripts/split_parquet_file.py). The resulting files are named `<DATATIER>_data_history.parquet`.
+
+2) `dataset_size_info.parquet` consists in a list of all the CMS datasets (from about 2007/2008 to 2020) providing general information about each one. In particular, the dataframe columns structure is the following:
+    * "**d_dataset**": dataset full name
+    * "**dsize**": dataset full size (in Bytes)
+    * "**nfiles**": number of distinct files in which the dataset is splitted
+    * "**devts**": number of events in the dataset
+    * "**tier**": dataset data-tier
+
+    ![df2](images/example_df2.png)
+
+3) `<DATATIER>_mcm_data.json` are a set of zipped JSON files containing infomation available only for simulated data (e.g. _AODSIM_, _MINIAODSIM_, _NANOAODSIM_, ...).
+This data has been downloaded from the CMS Monte Carlo Management (MCM) system by calling the _GET_ public API method:
+    * `public/restapi/requests/produces/<DATASET_NAME>`
+
+    where `DATASET_NAME` is the full name of the (produced) dataset (see [MCM Public](https://cms-pdmv.cern.ch/mcm/public/restapi/requests)).
+
+    The result of each query to MCM contains a lot of information for each dataset (including for instance the Physics Working Group):
+
+    ![df2](images/mcm_keys.png)
+
+    As a complete example of HTTP request to MCM, see the following link:\
+    https://cms-pdmv.cern.ch/mcm/public/restapi/requests/produces/SingleElectronPt35/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM
+
+    The script written to download all the data for a selected data-tier and save the result in a zipped JSON file is available in the repository: [scripts/dump_mcm_data.py](https://github.com/SimoneGasperini/cms-cmSim/blob/master/scripts/dump_mcm_data.py).
