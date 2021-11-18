@@ -119,11 +119,8 @@ class Country(Base):
         sites = self.t1_sites + self.t2_sites
         df = self._filter_by_datatiers(self.data, datatiers)
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
-        time_series = []
-        for site in sites:
-            dframe = df[df['node_name'] == site]
-            storage_history = self._get_storage_history(dframe, timeline)
-            time_series.append(storage_history)
+        time_series = [self._get_storage_history(df[df['node_name'] == site], timeline)
+                       for site in sites]
         if norm:
             time_series = plotting.norm_stacked_areas(time_series)
             ylabel = 'Data fraction'
