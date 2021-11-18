@@ -29,16 +29,16 @@ class Site(Base):
         return f'{class_name}({", ".join(args)})'
 
     @classmethod
-    def from_dataframe(cls, name, df):
+    def from_dataframe(cls, df, name):
         """
         Return the Site object created filtering data in the given dataframe.
 
         Parameters
         ----------
-        name : str
-            Site's name
         df : pandas.DataFrame
             Input dataframe
+        name : str
+            Site's name
 
         Returns
         -------

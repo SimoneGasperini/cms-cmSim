@@ -33,16 +33,16 @@ class Country(Base):
         return f'{class_name}({", ".join(args)})'
 
     @classmethod
-    def from_dataframe(cls, name, df):
+    def from_dataframe(cls, df, name):
         """
         Return the Country object created filtering data in the given dataframe.
 
         Parameters
         ----------
-        name : str
-            Country's name
         df : pandas.DataFrame
             Input dataframe
+        name : str
+            Country's name
 
         Returns
         -------
