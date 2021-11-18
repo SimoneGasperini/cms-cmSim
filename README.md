@@ -39,31 +39,23 @@ As an example about how to use the toolkit, suppose you want to investigate abou
 
 ```python
 import pandas as pd
+from cmSim.site import Site
 
-# reading data from local parquet file
+# loading dataframe from local parquet file
 df = pd.read_parquet('<FILEPATH>/dataset_site_info.parquet')
+
+# creating Site object from dataframe
+site = Site.from_dataframe(df, name='T1_IT_CNAF_Disk')
 ```
-
-```python
-from cmSim.country import Country
-
-# creating Country object from dataframe
-country = Country.from_dataframe(name='Italy', df=df)
-
-print('country =', country)
-print('T1s =', country.t1_sites)
-print('T2s =', country.t2_sites)
-```
-`country = Country(name=Italy, code=IT, #T1s=1, #T2s=4)`\
-`T1s = ['T1_IT_CNAF_Disk']`\
-`T2s = ['T2_IT_Rome', 'T2_IT_Bari', 'T2_IT_Pisa', 'T2_IT_Legnaro']`
 
 ```python
 import pylab as plt
 
-# plotting history of data stored on disk (grouped by site)
 fig, ax = plt.subplots(figsize=(16, 12))
-country.plot_storage_history_by_site(ax, norm=False)
+
+# plotting history of data stored on disk grouped by datatier
+datatiers = ['RAW', 'RECO', 'AOD', 'MINIAOD', 'AODSIM', 'MINIAODSIM']
+site.plot_storage_history_by_datatier(ax, datatiers=datatiers, norm=True)
 ```
 ![plot](images/example_plot.png)
 
@@ -74,15 +66,15 @@ The repository structure is the following:
 
 - `cmSim\` 🠊 it is the main directory containing the source code (e.g. all the modules implementing classes used in data analysis and model simulation) together with general configurations and additional tools;
 
-    * `config\` 🠊 it contains the JSON files to handle the toolkit configurations and settings (e.g. how to group countries in distinct datalakes, which color to use for plotting data belonging to different data-tiers/working groups, ...);
+    * `config\` 🠊 it contains the JSON files to handle the toolkit configurations and settings (e.g. choose the colors for plotting data belonging to different data-tiers/working groups, ...);
 
-    * `tools\` 🠊 it contains the additional tools implemented to perform some specific tasks related to the project (e.g. perform parallel HTTP requests to the CMS Monte Carlo Management system using multithreading, automatically adjust plotting settings, ...);
+    * `tools\` 🠊 it contains the additional tools implemented to perform some specific tasks related to the project (e.g. perform parallel HTTP requests to the CMS Monte Carlo Management system using multithreading, ...);
 
 - `images\` 🠊 it simply contains the images displayed in README file or other kind of documentation;
 
 - `notebooks\` 🠊 it contains useful notebooks as working examples about how to use the toolkit but also to start exploring the data;
 
-- `scripts\` 🠊 it contains several ready-to-run scripts to perform specific tasks (e.g. split the big PARQUET in smaller files, generate some plots, ...).
+- `scripts\` 🠊 it contains several ready-to-run scripts to perform specific tasks (e.g. split the big PARQUET in smaller files easier to be read, ...).
 
 ```
 .
