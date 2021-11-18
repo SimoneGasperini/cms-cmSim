@@ -49,7 +49,7 @@ class Base:
             storage_history = self._get_storage_history(dframe, timeline)
             time_series.append(storage_history)
         # Other datatiers
-        dframe = df[df['tier'] == 'Other']
+        dframe = df[~df['tier'].isin(datatiers)]
         storage_history = self._get_storage_history(dframe, timeline)
         time_series.append(storage_history)
         more_labels = ['Other']
