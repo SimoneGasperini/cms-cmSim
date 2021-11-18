@@ -24,6 +24,8 @@ def get_colors(labels, groups):
         lab_to_col = utils.get_pag_to_color()
     if groups == 'datatiers':
         lab_to_col = utils.get_datatier_to_color()
+    if groups == 'datalakes':
+        lab_to_col = utils.get_datalake_to_color()
     colors = [lab_to_col[lab] for lab in labels]
     return colors
 
