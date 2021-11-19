@@ -34,19 +34,3 @@ class McM:
         response = self.__http_request(url=url)
         results = response.get('results')
         return results
-
-
-if __name__ == '__main__':
-
-    mcm = McM()
-    name = '/SingleElectronPt35/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM'
-    result = mcm.get_by_dataset_name(name)
-    print(f'RESULT KEYS = {list(result.keys())}')
-
-    pd_name = result['dataset_name']
-    pwg = result['pwg']
-    campaign = result['member_of_campaign']
-
-    print(f'PRIMARY DATASET NAME = {pd_name}')
-    print(f'PWG = {pwg}')
-    print(f'CAMPAIGN = {campaign}')

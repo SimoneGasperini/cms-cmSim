@@ -37,21 +37,3 @@ def load_zipped_json(filepath):
 def dump_zipped_json(j, filepath):
     with open(filepath, mode='w') as f:
         json.dump(zip_json(j), f)
-
-
-if __name__ == '__main__':
-
-    filepath = './../../data/zip_mcm_dump.json'
-    data = load_zipped_json(filepath)
-
-    name = '/SingleElectronPt35/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM'
-    result = data[name]
-    print(f'RESULT KEYS = {list(result.keys())}')
-
-    pd_name = result['dataset_name']
-    pwg = result['pwg']
-    campaign = result['member_of_campaign']
-
-    print(f'PRIMARY DATASET NAME = {pd_name}')
-    print(f'PWG = {pwg}')
-    print(f'CAMPAIGN = {campaign}')
