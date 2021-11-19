@@ -118,7 +118,8 @@ All the data Several types of data structured in differernt ways are available:
 
     ![df1](images/example_df1.png)
 
-    Since this file is quiet big, smaller PARQUET have been created filtering for each generated file only data belonging to specific data-tiers (_RAW_, _RECO_, _AOD/AODSIM_, _MINIAOD/MINIAODSIM_, _NANOAOD/NANOAODSIM_).\
+    Since this file is quiet big, smaller PARQUET have been created filtering for each generated file only data belonging to specific data-tiers (_RAW_, _RECO_, _AOD_, _MINIAOD_, _NANOAOD_).\
+    For all Analysis Object Data (included _MINI_ and _NANO_) the dataframes dumped in the new files contain two more columns: "**pwg**" (Physics Working Group) and "**campaign**" (both available for simulated datasets only, 'None' assigned to real datasets).\
     The script written to do this job is available in the repository: [scripts\split_parquet_file.py](https://github.com/SimoneGasperini/cms-cmSim/blob/master/scripts/split_parquet_file.py). The resulting files are named `<DATATIER>_data_history.parquet`.
 
 2) `dataset_size_info.parquet` consists in a list of all the CMS datasets (from about 2007/2008 to 2020) providing general information about each one. In particular, the dataframe columns structure is the following:
