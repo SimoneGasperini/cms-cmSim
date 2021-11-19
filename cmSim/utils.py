@@ -129,6 +129,14 @@ def get_pwg_from_dataset(dataset, mcm_data):
         return 'None'
 
 
+def get_campaign_from_dataset(dataset, mcm_data):
+    if dataset in mcm_data:
+        campaign = mcm_data[dataset]['member_of_campaign']
+        return campaign
+    else:
+        return 'None'
+
+
 def get_pag_to_color():
     pwgs_dict = load_json_file('physics_groups.json')
     pags = get_pags()
