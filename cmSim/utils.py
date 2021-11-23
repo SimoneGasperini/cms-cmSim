@@ -1,4 +1,5 @@
 import os
+import re
 import json
 from cmSim.tools import zipping
 
@@ -135,6 +136,18 @@ def get_campaign_from_dataset(dataset, mcm_data):
         return campaign
     else:
         return 'None'
+
+
+def get_year_from_campaign(campaign, min_year='2011', max_year='2020'):
+    substrs = ['Winter\d{2}', 'Spring\d{2}', 'Spr\d{2}',
+               'Summer\d{2}', 'Fall\d{2}', 'Autumn\d{2}']
+    for substr in substrs:
+        match = re.search(substr, campaign)
+        if match is not None:
+            year = '20' + match.group(0)[-2:]
+            if min_year <= year <= max_year:
+                return year
+    return 'None'
 
 
 def get_pag_to_color():
