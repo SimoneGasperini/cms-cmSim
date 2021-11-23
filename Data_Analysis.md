@@ -3,7 +3,7 @@
 
 **QUESTION 1**: Which is the total size of data replicas stored on disk all over the world for the CMS experiment in 2019-2020? How is it splitted between Tier-1 and Tier-2 sites? Which are the prevailing data-tiers?
 
-### 🠊 [Link to OneDrive: "plots/overview/storage_over_time/"](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/EgnSuna5LPJIj4u8jFJLxDMBCDvw-lIB-CfYdB4RCwR9jA?e=Pl8WaW)
+### 🠊 Link to OneDrive: ["plots/overview/storage_over_time/"](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/EgnSuna5LPJIj4u8jFJLxDMBCDvw-lIB-CfYdB4RCwR9jA?e=Pl8WaW)
 
 
 #
@@ -13,7 +13,7 @@ In particular, only Physics Analysis Groups (PAGs) are considered while Physics 
 
 Note that the PWG assigned to each single dataset is actually the PWG who sent the request to the [Monte Carlo Management](https://cms-pdmv.gitbook.io/project/) (MCM) system to trigger the production of the corresponding dataset. Label "Not found" is used for datasets which have not been successfully found on MCM.
 
-### 🠊 [Link to OneDrive: "plots/overview/sim_data_by_pag/"](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/EnmAcBJm7RlDoC2TJnTkiegBK3ZH4wJL_naTothJz9UQqg?e=QTLKg9)
+### 🠊 Link to OneDrive: ["plots/overview/sim_data_by_pag/"](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/EnmAcBJm7RlDoC2TJnTkiegBK3ZH4wJL_naTothJz9UQqg?e=QTLKg9)
 
 
 #
@@ -25,4 +25,4 @@ Note that the PWG assigned to each single dataset is actually the PWG who sent t
 
 Note that to address this question, each simulated dataset needs to be assigned to the corresponding year of production. To do this, the string "campaign" in the MCM request is used to extract the proper information (e.g. "campaign" = "RunIIAutumn18MiniAOD" --> "year" = "2018").
 
-### 🠊 [Link to OneDrive: "plots/overview/sim_event_size/"](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/EjB1Wpt5WldAt46EAhDi6UIBEtpSsLvLKP3I53ezIMyISg?e=sO1Gx4)
+### 🠊 Link to OneDrive: ["plots/overview/sim_event_size/"](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/EjB1Wpt5WldAt46EAhDi6UIBEtpSsLvLKP3I53ezIMyISg?e=sO1Gx4)
