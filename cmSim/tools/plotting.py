@@ -1,6 +1,7 @@
 import numpy as np
 import pylab as plt
 from cmSim import utils
+from matplotlib.ticker import FuncFormatter
 
 
 def norm_stacked_areas(time_series):
@@ -71,14 +72,20 @@ def _sort_legend_labels(ax, labels):
     return sorted_handles, sorted_labels
 
 
+def _format_size(size, _):
+    exp_to_unit = {0: ' B', 3: ' KB', 6: ' MB', 9: ' GB', 12: ' TB', 15: ' PB'}
+    for exp in sorted(list(exp_to_unit.keys())):
+        new_size = size / 10**exp
+        if new_size < 100:
+            return f'{float(f"{new_size:.1g}"):g}' + exp_to_unit[exp]
+
+
 def plot_piechart_by_pag(ax, df, pags, datatiers=None):
     if datatiers is not None:
         df = df[df['tier'].isin(datatiers)]
     data = [df[df['pwg'] == pag]['dsize'].sum() for pag in pags]
-    # Other PWG
     df_other = df[(df['pwg'] != 'None') & (~df['pwg'].isin(pags))]
     data.append(df_other['dsize'].sum())
-    # PWG not found
     df_not_found = df[df['pwg'] == 'None']
     data.append(df_not_found['dsize'].sum())
     labels = pags + ['Other PWG', 'Not found']
@@ -87,5 +94,35 @@ def plot_piechart_by_pag(ax, df, pags, datatiers=None):
            autopct='%1.1f%%', pctdistance=1.1, textprops={'fontsize': 16}, labeldistance=None)
     total = round(df['dsize'].sum() / 1e15, 3)
     ax.set_title(f'Total size = {total} PB', fontsize=20)
-    ax.legend(title='PAGs', title_fontsize=18, loc='center left',
+    ax.legend(title='PAGs', title_fontsize=20, loc='center left',
+              bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16)
+
+
+def plot_event_mean_size(ax, df, datatiers):
+    df = df[df['tier'].isin(datatiers)]
+    years = sorted(list(df['year'].unique()))
+    if 'None' in years:
+        years.remove('None')
+    data = {}
+    for dtier in datatiers:
+        df_dtier = df[df['tier'] == dtier]
+        data[dtier] = []
+        for year in years:
+            df_year = df_dtier[df_dtier['year'] == year]
+            data[dtier].append(
+                df_year['dsize'].sum() / df_year['devts'].sum() if not df_year.empty else 0.)
+    pos = np.arange(len(years))
+    width = 0.9 / len(datatiers)
+    bars = [ax.bar(pos + i*width, data[dtier], width=width, label=dtier)
+            for i, dtier in enumerate(datatiers)]
+    ticks = pos + (width / 2 * (len(datatiers) - 1))
+    ax.set_xticks(ticks)
+    ax.set_xticklabels(years)
+    ax.set_yscale('log')
+    ax.tick_params(axis='both', which='both', labelsize=12)
+    ax.yaxis.set_major_formatter(FuncFormatter(_format_size))
+    ax.yaxis.set_minor_formatter(FuncFormatter(_format_size))
+    ax.set_ylabel('Event mean size', fontsize=18)
+    ax.grid(which='both', linestyle='dotted')
+    ax.legend(bars, datatiers, title='Data-tiers', title_fontsize=20, loc='center left',
               bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16)
