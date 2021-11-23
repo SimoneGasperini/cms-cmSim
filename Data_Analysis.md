@@ -19,9 +19,9 @@ Note that the PWG assigned to each single dataset is actually the PWG who sent t
 #
 **QUESTION 3**: For simulated Analysis Object Data (_AODSIM_, _MINIAODSIM_, _NANOAODSIM_), how did the mean size per event change in the time span from 2011 to 2020? Is there a correlation between this mean size and physical quantities like LHC luminosity? Is the mean size measured from the simulated data actually close to the nominal mean size given for each data-tier?
 
-- Nominal size for _AOD_ (Run II) events =  $0.4$-$0.5$ $MB/evt$
-- Nominal size for _MINIAOD_ (Run II) events = $40$-$50$ $KB/evt$
-- Nominal size for _NANOAOD_ (Run II) events = $1$-$2$ $KB/evt$
+- Nominal size for _AOD_ (Run II) events = <a href="https://www.codecogs.com/eqnedit.php?latex=0.4-0.5&space;\&space;MB/evt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?0.4-0.5&space;\&space;MB/evt" title="0.4-0.5 \ MB/evt" /></a>
+- Nominal size for _MINIAOD_ (Run II) events = <a href="https://www.codecogs.com/eqnedit.php?latex=40-50&space;\&space;KB/evt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?40-50&space;\&space;KB/evt" title="40-50 \ KB/evt" /></a>
+- Nominal size for _NANOAOD_ (Run II) events = <a href="https://www.codecogs.com/eqnedit.php?latex=1-2&space;\&space;KB/evt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?1-2&space;\&space;KB/evt" title="1-2 \ KB/evt" /></a>
 
 Note that to address this question, each simulated dataset needs to be assigned to the corresponding year of production. To do this, the string "campaign" in the MCM request is used to extract the proper information (e.g. "campaign" = "RunIIAutumn18MiniAOD" --> "year" = "2018").
 
