@@ -37,7 +37,7 @@ python setup.py install
 
 
 ## Usage example
-As an example about how to use the toolkit, suppose you want to investigate about how much data is stored in a specific country (e.g. `Italy`) over time (e.g. from `2019-1-1` to `2020-12-31`), grouping data by all the different sites in that country.
+As an example about how to use the toolkit, suppose you want to investigate about data stored on disk in a specific site (e.g. `T1_IT_CNAF_Disk` in `Italy`) over time (e.g. from `2019-1-1` to `2020-12-31`), showing the fraction of data for each data-tier.
 
 ```python
 import pandas as pd
