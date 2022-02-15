@@ -66,6 +66,14 @@ def get_datalake_from_site(site):
     return get_datalake_from_country(country)
 
 
+def group_sites_by_datalake(sites):
+    datalake_to_sites = {datalake: [] for datalake in get_datalakes()}
+    for site in sites:
+        datalake = get_datalake_from_site(site)
+        datalake_to_sites[datalake].append(site)
+    return datalake_to_sites
+
+
 def get_datalake_to_color():
     datalakes_dict = load_json_file('datalakes.json')
     return {dl: datalakes_dict[dl]['color'] for dl in datalakes_dict}
@@ -120,9 +128,10 @@ def get_pwgName_from_pwgCode(code):
     raise KeyError(f'PWG code "{code}" not found')
 
 
-def get_pwg_from_dataset(dataset, mcm_data):
+def get_pwg_from_dataset(dataset, mcm_data, key=None):
+    key = 'pwg' if key is None else key
     if dataset in mcm_data:
-        pwg = mcm_data[dataset]['pwg']
+        pwg = mcm_data[dataset][key]
         if pwg in PWGS_TO_MERGE:
             pwg = PWGS_TO_MERGE[pwg]
         return pwg
@@ -130,23 +139,36 @@ def get_pwg_from_dataset(dataset, mcm_data):
         return 'None'
 
 
-def get_campaign_from_dataset(dataset, mcm_data):
+def get_campaign_from_dataset(dataset, mcm_data, key=None):
+    key = 'member_of_campaign' if key is None else key
     if dataset in mcm_data:
-        campaign = mcm_data[dataset]['member_of_campaign']
-        return campaign
-    else:
-        return 'None'
+        campaign = mcm_data[dataset][key]
+        substrs = ['Winter\d{2}', 'Spring\d{2}',
+                   'Summer\d{2}', 'Fall\d{2}', 'Autumn\d{2}']
+        for substr in substrs:
+            match = re.search(substr, campaign)
+            if match is not None:
+                season = match.group(0)
+                break
+        else:
+            return 'None'
+        if campaign.startswith('HIN'):
+            return 'HIN-' + season
+        if campaign.startswith('RunII'):
+            return 'RunII-' + season
+    return 'None'
 
 
-def get_year_from_campaign(campaign, min_year='2011', max_year='2020'):
-    substrs = ['Winter\d{2}', 'Spring\d{2}', 'Spr\d{2}',
-               'Summer\d{2}', 'Fall\d{2}', 'Autumn\d{2}']
-    for substr in substrs:
-        match = re.search(substr, campaign)
-        if match is not None:
-            year = '20' + match.group(0)[-2:]
-            if min_year <= year <= max_year:
-                return year
+def get_generator_from_dataset(dataset, mcm_data):
+    valid_gens = {'pythia6', 'pythia8', 'madgraph', 'sherpa', 'tauola', 'powheg',
+                  'alpgen', 'blackmax', 'evtgen', 'herwig', 'mcatnlo'}
+    if dataset in mcm_data:
+        gens_str = ''.join(mcm_data[dataset]['generators'])
+        for string in [gens_str, dataset]:
+            generators_list = sorted(
+                [gen for gen in valid_gens if gen in string.lower()])
+        if generators_list:
+            return '+'.join(generators_list)
     return 'None'
 
 
