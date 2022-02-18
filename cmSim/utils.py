@@ -160,15 +160,13 @@ def get_campaign_from_dataset(dataset, mcm_data, key=None):
 
 
 def get_generator_from_dataset(dataset, mcm_data):
-    valid_gens = {'pythia6', 'pythia8', 'madgraph', 'sherpa', 'tauola', 'powheg',
-                  'alpgen', 'blackmax', 'evtgen', 'herwig', 'mcatnlo'}
+    valid_gens = ['evtgen', 'herwig', 'alpgen', 'mcatnlo', 'pythia6',
+                  'sherpa', 'tauola', 'powheg', 'madgraph', 'pythia8']
     if dataset in mcm_data:
-        gens_str = ''.join(mcm_data[dataset]['generators'])
-        for string in [gens_str, dataset]:
-            generators_list = sorted(
-                [gen for gen in valid_gens if gen in string.lower()])
-        if generators_list:
-            return '+'.join(generators_list)
+        gens_str = ''.join(mcm_data[dataset]['generators']) + dataset
+        for gen in valid_gens:
+            if gen in gens_str.lower():
+                return gen
     return 'None'
 
 
