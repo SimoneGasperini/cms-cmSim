@@ -172,6 +172,16 @@ def get_generator_from_dataset(dataset, mcm_data):
     return 'None'
 
 
+def get_rounded_num_accesses(fract_read, max_num_accesses_in_day=5):
+    if fract_read <= 0:
+        return 0
+    if fract_read <= 1:
+        return 1
+    if fract_read <= max_num_accesses_in_day:
+        return round(fract_read)
+    return max_num_accesses_in_day
+
+
 def get_pag_to_color():
     pwgs_dict = load_json_file('physics_groups.json')
     pags = get_pags()
