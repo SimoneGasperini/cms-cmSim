@@ -4,6 +4,7 @@ import pandas as pd
 from tqdm import tqdm
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from cmSim import utils
 
 tqdm.pandas()
 sim_tiers = ['AODSIM', 'MINIAODSIM', 'NANOAODSIM']
@@ -36,8 +37,7 @@ def create_data_accesses_sim_parquet():
     df = pd.read_parquet('./../data/parquet/dataset_reads.parquet').dropna()
     df['tier'] = df['d_dataset'].apply(lambda name: name.split('/')[-1])
     df = df[df['tier'].isin(sim_tiers)]
-    df['num_accesses'] = df['fract_read'].apply(
-        lambda fract: 1 if fract <= 1. else round(fract))
+    df['num_accesses'] = df['fract_read'].apply(utils.get_rounded_num_accesses)
     df.reset_index(drop=True).to_parquet('./../data/data_accesses_sim.parquet')
     print(' Done')
 
@@ -115,25 +115,19 @@ def get_replicas_info(df, datasets_names):
     df = df[df['dataset_name'].isin(datasets_names)]
     replicas_info = {dataset: {'num_replicas': len(dframe),
                                'mean_size_replicas': dframe['rep_size'].mean(),
-                               'num_sites_replicas': dframe['node_name'].nunique(),
-                               'first_replica': dframe['min_time'].min(),
-                               'last_replica': dframe['max_time'].max()}
+                               'num_sites_replicas': dframe['node_name'].nunique()}
                      for dataset, dframe in tqdm(df.groupby('dataset_name'))}
     return replicas_info
 
 
-def get_accesses_info(df, datasets_names):
+def get_accesses_info(datasets_names):
     print(f'Getting accesses info...', flush=True)
-    df = df[df['d_dataset'].isin(datasets_names)]
     with open('./../data/data_accesses_by_month.json', mode='r') as file:
         data = json.load(file)
     accesses_info = {dataset: {'mean_accesses/month': np.mean(list(data[dataset].values())),
-                               '<50_mean_accesses/month': np.mean([v if v < 50 else 50 for v in data[dataset].values()]),
-                               '<100_mean_accesses/month': np.mean([v if v < 100 else 100 for v in data[dataset].values()]),
-                               'median_accesses/month': np.median(list(data[dataset].values())),
-                               'first_access': dframe['day'].min(),
-                               'last_access': dframe['day'].max()}
-                     for dataset, dframe in tqdm(df.groupby('d_dataset'))}
+                               'std_accesses/month': np.std(list(data[dataset].values())),
+                               'median_accesses/month': np.median(list(data[dataset].values()))}
+                     for dataset in datasets_names}
     return accesses_info
 
 
@@ -149,14 +143,13 @@ def create_pop_features_parquet():
                                       set(df3['d_dataset']), set(mcm.keys()))
     info1 = get_datasets_info(df1, datasets_names, dset_to_idx)
     info2 = get_replicas_info(df2, datasets_names)
-    info3 = get_accesses_info(df3, datasets_names)
+    info3 = get_accesses_info(datasets_names)
     print('Creating "pop_features.parquet"...', flush=True, end='')
     keys1 = ['full_name', 'tot_size', 'num_files', 'num_events', 'data_tier']
     mcm_keys = ['pag', 'campaign', 'generator']
-    keys2 = ['num_replicas', 'mean_size_replicas',
-             'num_sites_replicas', 'first_replica', 'last_replica']
-    keys3 = ['mean_accesses/month', '<50_mean_accesses/month', '<100_mean_accesses/month',
-             'median_accesses/month', 'first_access', 'last_access']
+    keys2 = ['num_replicas', 'mean_size_replicas', 'num_sites_replicas']
+    keys3 = ['mean_accesses/month', 'std_accesses/month',
+             'median_accesses/month']
     pop_dict = {dset_to_idx[dset]: [info1[dset][k] for k in keys1] +
                 [mcm[dset][k] for k in mcm_keys] +
                 [info2[dset][k] for k in keys2] +
@@ -170,7 +163,7 @@ def create_pop_features_parquet():
 
 
 if __name__ == '__main__':
-    """
+
     print('\nSTEP-1')
     create_datasets_list_sim_parquet()
     create_site_info_sim_parquet()
@@ -180,6 +173,6 @@ if __name__ == '__main__':
     create_data_replicas_on_disk_json()
     remove_bad_accesses_from_parquet()
     create_data_accesses_by_month_json()
-    """
+
     print('\nSTEP-3')
     create_pop_features_parquet()
