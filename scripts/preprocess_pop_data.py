@@ -1,3 +1,4 @@
+import os
 import json
 import numpy as np
 import pandas as pd
@@ -19,8 +20,8 @@ def create_datasets_list_sim_parquet():
     print(' Done')
 
 
-def create_site_info_sim_parquet():
-    print(f'Creating "site_info_sim.parquet"...', flush=True, end='')
+def create_data_replicas_sim_parquet():
+    print(f'Creating "data_replicas_sim.parquet"...', flush=True, end='')
     df = pd.read_parquet(
         './../data/parquet/dataset_site_info.parquet').dropna()
     df = df.drop(
@@ -28,7 +29,7 @@ def create_site_info_sim_parquet():
     df = df[df['tier'].isin(sim_tiers)]
     for col in ['min_time', 'max_time']:
         df[col] = df[col].apply(lambda date: date.strftime('%Y%m%d'))
-    df.reset_index(drop=True).to_parquet('./../data/site_info_sim.parquet')
+    df.reset_index(drop=True).to_parquet('./../data/data_replicas_sim.parquet')
     print(' Done')
 
 
@@ -42,9 +43,39 @@ def create_data_accesses_sim_parquet():
     print(' Done')
 
 
+def create_datasets_mcm_info_json():
+    pags = utils.get_pags()
+    for sim_tier in sim_tiers:
+        filepath = f'./../data/mcm/{sim_tier.lower()}_mcm_data.json'
+        mcm_data = utils.get_mcm_data(filepath)
+        temp_data = {}
+        for dataset in tqdm(mcm_data, desc=f'Getting {sim_tier} datasets info'):
+            pwg = utils.get_pwg_from_dataset(dataset, mcm_data)
+            campaign = utils.get_campaign_from_dataset(dataset, mcm_data)
+            generator = utils.get_generator_from_dataset(dataset, mcm_data)
+            if pwg not in pags or campaign == 'None' or generator == 'None':
+                continue
+            temp_data[dataset] = {
+                'pag': pwg, 'campaign': campaign, 'generator': generator}
+        with open(f'./../data/{sim_tier.lower()}_temp.json', mode='w') as f:
+            json.dump(temp_data, f)
+        mcm_data = None
+        temp_data = None
+    print(f'Creating "datasets_mcm_info.json"...', flush=True, end='')
+    data = {}
+    for sim_tier in sim_tiers:
+        filename = f'./../data/{sim_tier.lower()}_temp.json'
+        with open(filename, mode='r') as f:
+            data.update(json.load(f))
+        os.remove(filename)
+    with open(f'./../data/datasets_mcm_info.json', mode='w') as file:
+        json.dump(data, file, indent=2)
+    print(' Done')
+
+
 def create_data_replicas_on_disk_json():
     print(f'Creating "data_replicas_on_disk.json"...', flush=True)
-    df = pd.read_parquet('./../data/site_info_sim.parquet')
+    df = pd.read_parquet('./../data/data_replicas_sim.parquet')
     data = {dataset: {} for dataset in set(df['dataset_name'])}
     for dataset, dframe in tqdm(df.groupby('dataset_name')):
         data[dataset]['intervals'] = set(
@@ -127,7 +158,7 @@ def get_accesses_info(datasets_names):
     accesses_info = {dataset: {'mean_accesses/month': np.mean(list(data[dataset].values())),
                                'std_accesses/month': np.std(list(data[dataset].values())),
                                'median_accesses/month': np.median(list(data[dataset].values()))}
-                     for dataset in datasets_names}
+                     for dataset in tqdm(datasets_names)}
     return accesses_info
 
 
@@ -135,9 +166,9 @@ def create_pop_features_parquet():
     df1 = pd.read_parquet('./../data/datasets_list_sim.parquet')
     dset_to_idx = {dset: idx
                    for idx, dset in df1['d_dataset'].to_dict().items()}
-    df2 = pd.read_parquet('./../data/site_info_sim.parquet')
+    df2 = pd.read_parquet('./../data/data_replicas_sim.parquet')
     df3 = pd.read_parquet('./../data/data_accesses_sim.parquet')
-    with open('./../data/mcm_features.json', mode='r') as file:
+    with open('./../data/datasets_mcm_info.json', mode='r') as file:
         mcm = json.load(file)
     datasets_names = set.intersection(set(df1['d_dataset']), set(df2['dataset_name']),
                                       set(df3['d_dataset']), set(mcm.keys()))
@@ -166,13 +197,16 @@ if __name__ == '__main__':
 
     print('\nSTEP-1')
     create_datasets_list_sim_parquet()
-    create_site_info_sim_parquet()
+    create_data_replicas_sim_parquet()
     create_data_accesses_sim_parquet()
 
     print('\nSTEP-2')
+    create_datasets_mcm_info_json()
+
+    print('\nSTEP-3')
     create_data_replicas_on_disk_json()
     remove_bad_accesses_from_parquet()
     create_data_accesses_by_month_json()
 
-    print('\nSTEP-3')
+    print('\nSTEP-4')
     create_pop_features_parquet()
