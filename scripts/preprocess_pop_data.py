@@ -15,6 +15,9 @@ def create_datasets_list_sim_parquet():
     print(f'Creating "datasets_list_sim.parquet"...', flush=True, end='')
     df = pd.read_parquet(
         './../data/parquet/dataset_size_info.parquet').dropna()
+    df = df[df['dsize'] > 0.]
+    df = df[df['nfiles'] > 0]
+    df = df[df['devts'] > 0]
     df = df[df['tier'].isin(sim_tiers)]
     df.reset_index(drop=True).to_parquet('./../data/datasets_list_sim.parquet')
     print(' Done')
@@ -22,10 +25,9 @@ def create_datasets_list_sim_parquet():
 
 def create_data_replicas_sim_parquet():
     print(f'Creating "data_replicas_sim.parquet"...', flush=True, end='')
-    df = pd.read_parquet(
-        './../data/parquet/dataset_site_info.parquet').dropna()
+    df = pd.read_parquet('./../data/parquet/dataset_site_info.parquet')
     df = df.drop(
-        columns=['dataset_id', 'replica_time_create', 'br_user_group_id'])
+        columns=['dataset_id', 'replica_time_create', 'br_user_group_id']).dropna()
     df = df[df['tier'].isin(sim_tiers)]
     for col in ['min_time', 'max_time']:
         df[col] = df[col].apply(lambda date: date.strftime('%Y%m%d'))
