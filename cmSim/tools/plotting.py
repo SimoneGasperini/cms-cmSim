@@ -56,11 +56,11 @@ def get_custom_colors(labels, groups):
 
 
 def set_stackplot_settings(ax, ylabel, legend_title, legend_labels):
-    ax.tick_params(axis='both', labelsize=14)
-    ax.set_ylabel(ylabel, fontsize=18)
+    ax.tick_params(axis='both', which='major', labelsize=18)
+    ax.set_ylabel(ylabel, fontsize=24)
     handles, labels = _sort_legend_labels(ax, legend_labels)
-    ax.legend(handles, labels, title=legend_title, title_fontsize=20,
-              loc='center left', bbox_to_anchor=(1, 0.5), fontsize=16)
+    ax.legend(handles, labels, title=legend_title, title_fontsize=28,
+              loc='center left', bbox_to_anchor=(1, 0.5), fontsize=20)
     ax.grid(linestyle='dotted')
 
 

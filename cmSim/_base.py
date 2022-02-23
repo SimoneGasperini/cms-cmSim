@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from datetime import date
 from cmSim.tools import plotting
 
@@ -49,13 +50,14 @@ class Base:
         storage_history = self._get_storage_history(
             df[~df['tier'].isin(datatiers)], timeline)
         time_series.append(storage_history)
+        time_series = np.array(time_series) / 1e15
         more_labels = ['Other']
         labels = datatiers + more_labels
         if norm:
             time_series = plotting.norm_stacked_areas(time_series)
             ylabel = 'Data fraction'
         else:
-            ylabel = 'Data amount [B]'
+            ylabel = 'Data amount [PB]'
         time_series, sorted_labels = plotting.sort_stacked_areas(
             time_series=time_series, labels=datatiers, more_labels=more_labels)
         sorted_colors = plotting.get_custom_colors(
@@ -63,7 +65,7 @@ class Base:
         ax.stackplot(timeline, time_series,
                      labels=sorted_labels, colors=sorted_colors)
         plotting.set_stackplot_settings(
-            ax, ylabel=ylabel, legend_title='Data-tiers', legend_labels=labels)
+            ax, ylabel=ylabel, legend_title='Data tiers', legend_labels=labels)
 
     def plot_storage_history_by_pag(self, ax, pags, datatiers=None, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         """
