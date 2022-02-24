@@ -23,10 +23,8 @@ def sort_stacked_areas(time_series, labels, more_labels=[]):
 
 def merge_stacked_areas(time_series, labels):
     if len(time_series) > 9:
-        time_series = np.vstack((time_series[:9],
-                                 time_series[9:].sum(axis=0)))
-        labels = np.append(labels[:9],
-                           'Other')
+        time_series = np.vstack((time_series[:9], time_series[9:].sum(axis=0)))
+        labels = np.append(labels[:9], 'Other')
     return time_series, labels
 
 
@@ -90,30 +88,32 @@ def plot_piechart_by_pag(ax, df, pags, datatiers=None):
               bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16)
 
 
-def plot_event_mean_size(ax, df, datatiers):
+def plot_average_size_per_event(ax, df, datatiers):
     df = df[df['tier'].isin(datatiers)]
     years = sorted(list(df['year'].unique()))
-    if 'None' in years:
-        years.remove('None')
+    datatier_to_color = utils.get_datatier_to_color()
+    colors = []
     data = {}
     for dtier in datatiers:
         df_dtier = df[df['tier'] == dtier]
+        colors.append(datatier_to_color[dtier])
         data[dtier] = []
         for year in years:
             df_year = df_dtier[df_dtier['year'] == year]
-            data[dtier].append(
-                df_year['dsize'].sum() / df_year['devts'].sum() / 1e3 if not df_year.empty else 0.)
+            tot_size = df_year['dsize'].sum() / 1e3
+            num_events = df_year['devts'].sum()
+            data[dtier].append(tot_size / num_events if num_events != 0 else 0.)
     pos = np.arange(len(years))
     width = 0.9 / len(datatiers)
-    bars = [ax.bar(pos + i*width, data[dtier], width=width, label=dtier)
-            for i, dtier in enumerate(datatiers)]
+    bars = [ax.bar(pos + i*width, data[datatiers[i]], width=width, label=datatiers[i], color=colors[i])
+            for i in range(len(datatiers))]
     ax.set_xticks(pos + (width / 2 * (len(datatiers) - 1)))
-    ax.set_xticklabels(years)
+    ax.set_xticklabels(years, fontdict={'fontsize': 20})
     ax.set_yscale('log')
-    ax.tick_params(axis='both', which='both', labelsize=14)
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.0f'))
     ax.yaxis.set_minor_formatter(FormatStrFormatter('%.0f'))
-    ax.set_ylabel('Event mean size (KB)', fontsize=18)
+    ax.tick_params(axis='y', which='both', labelsize=14)
+    ax.set_ylabel('Average size/event [KB]', fontsize=24)
     ax.grid(which='both', linestyle='dotted')
-    ax.legend(bars, datatiers, title='Data-tiers', title_fontsize=20, loc='center left',
-              bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16)
+    ax.legend(bars, datatiers, title='Data tiers', title_fontsize=28, loc='center left',
+              bbox_to_anchor=(1, 0, 0.5, 1), fontsize=20)
