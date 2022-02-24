@@ -128,10 +128,9 @@ def get_pwgName_from_pwgCode(code):
     raise KeyError(f'PWG code "{code}" not found')
 
 
-def get_pwg_from_dataset(dataset, mcm_data, key=None):
-    key = 'pwg' if key is None else key
+def get_pwg_from_dataset(dataset, mcm_data):
     if dataset in mcm_data:
-        pwg = mcm_data[dataset][key]
+        pwg = mcm_data[dataset]['pwg']
         if pwg in PWGS_TO_MERGE:
             pwg = PWGS_TO_MERGE[pwg]
         return pwg
@@ -139,10 +138,9 @@ def get_pwg_from_dataset(dataset, mcm_data, key=None):
         return 'None'
 
 
-def get_campaign_from_dataset(dataset, mcm_data, key=None):
-    key = 'member_of_campaign' if key is None else key
+def get_campaign_from_dataset(dataset, mcm_data):
     if dataset in mcm_data:
-        campaign = mcm_data[dataset][key]
+        campaign = mcm_data[dataset]['member_of_campaign']
         substrs = ['Winter\d{2}', 'Spring\d{2}',
                    'Summer\d{2}', 'Fall\d{2}', 'Autumn\d{2}']
         for substr in substrs:
