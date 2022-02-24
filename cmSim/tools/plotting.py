@@ -5,14 +5,12 @@ from matplotlib.ticker import FormatStrFormatter
 
 
 def norm_stacked_areas(time_series):
-    time_series = np.array(time_series)
     tot_time_series = time_series.sum(axis=0)
     normed_time_series = time_series / tot_time_series
     return normed_time_series
 
 
 def sort_stacked_areas(time_series, labels, more_labels=[]):
-    time_series = np.array(time_series)
     labels = np.array(labels)
     n = len(labels)
     sorting = time_series[:n].mean(axis=1).argsort()[::-1]
@@ -21,25 +19,12 @@ def sort_stacked_areas(time_series, labels, more_labels=[]):
     return sorted_time_series, sorted_labels
 
 
-def merge_stacked_areas(time_series, labels):
-    if len(time_series) > 9:
-        time_series = np.vstack((time_series[:9], time_series[9:].sum(axis=0)))
-        labels = np.append(labels[:9], 'Other')
-    return time_series, labels
-
-
-def get_default_colors(labels):
-    n = len(labels)
-    if n > 10:
-        raise ValueError('Maximum number of distinct labels is 9 (+ "Other")')
-    else:
-        colors = [plt.cm.tab10(i) for i in range(10)]
-        if 'Other' in labels:
-            i = np.where(labels == 'Other')[0][0]
-            colors[i], colors[7] = colors[7], colors[9]
-        else:
-            colors[7] = colors[9]
-    return colors[:n]
+def get_default_colors(labels, cmap=plt.cm.tab10):
+    colors = [cmap(i) for i in range(len(labels))]
+    if 'Not found' in labels:
+        i = np.where(labels == 'Not found')[0][0]
+        colors[i] = 'black'
+    return colors
 
 
 def get_custom_colors(labels, groups):
@@ -53,21 +38,13 @@ def get_custom_colors(labels, groups):
     return colors
 
 
-def set_stackplot_settings(ax, ylabel, legend_title, legend_labels):
-    ax.tick_params(axis='both', which='major', labelsize=18)
-    ax.set_ylabel(ylabel, fontsize=24)
-    handles, labels = _sort_legend_labels(ax, legend_labels)
-    ax.legend(handles, labels, title=legend_title, title_fontsize=28,
-              loc='center left', bbox_to_anchor=(1, 0.5), fontsize=20)
-    ax.grid(linestyle='dotted')
-
-
-def _sort_legend_labels(ax, labels):
+def set_legend_settings(ax, title, labels):
     _handles, _labels = ax.get_legend_handles_labels()
     sorting = [np.where(np.array(_labels) == lab)[0][0] for lab in labels]
     sorted_handles = np.array(_handles)[sorting]
     sorted_labels = np.array(_labels)[sorting]
-    return sorted_handles, sorted_labels
+    ax.legend(sorted_handles, sorted_labels, title=title, title_fontsize=28,
+              loc='center left', bbox_to_anchor=(1, 0.5), fontsize=20)
 
 
 def plot_piechart_by_pag(ax, df, pags, datatiers=None):
@@ -102,7 +79,8 @@ def plot_average_size_per_event(ax, df, datatiers):
             df_year = df_dtier[df_dtier['year'] == year]
             tot_size = df_year['dsize'].sum() / 1e3
             num_events = df_year['devts'].sum()
-            data[dtier].append(tot_size / num_events if num_events != 0 else 0.)
+            data[dtier].append(
+                tot_size / num_events if num_events != 0 else 0.)
     pos = np.arange(len(years))
     width = 0.9 / len(datatiers)
     bars = [ax.bar(pos + i*width, data[datatiers[i]], width=width, label=datatiers[i], color=colors[i])
