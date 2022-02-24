@@ -46,19 +46,13 @@ def create_data_accesses_sim_parquet():
 
 
 def create_datasets_mcm_info_json():
-    pags = utils.get_pags()
     for sim_tier in sim_tiers:
         filepath = f'./../data/mcm/{sim_tier.lower()}_mcm_data.json'
         mcm_data = utils.get_mcm_data(filepath)
-        temp_data = {}
-        for dataset in tqdm(mcm_data, desc=f'Getting {sim_tier} datasets info'):
-            pwg = utils.get_pwg_from_dataset(dataset, mcm_data)
-            campaign = utils.get_campaign_from_dataset(dataset, mcm_data)
-            generator = utils.get_generator_from_dataset(dataset, mcm_data)
-            if pwg not in pags or campaign == 'None' or generator == 'None':
-                continue
-            temp_data[dataset] = {
-                'pag': pwg, 'campaign': campaign, 'generator': generator}
+        temp_data = {dataset: {'pwg': utils.get_pwg_from_dataset(dataset, mcm_data),
+                               'campaign': utils.get_campaign_from_dataset(dataset, mcm_data),
+                               'generator': utils.get_generator_from_dataset(dataset, mcm_data)}
+                     for dataset in tqdm(mcm_data, desc=f'Getting {sim_tier} datasets info')}
         with open(f'./../data/{sim_tier.lower()}_temp.json', mode='w') as f:
             json.dump(temp_data, f)
         mcm_data = None
@@ -171,7 +165,18 @@ def create_pop_features_parquet():
     df2 = pd.read_parquet('./../data/data_replicas_sim.parquet')
     df3 = pd.read_parquet('./../data/data_accesses_sim.parquet')
     with open('./../data/datasets_mcm_info.json', mode='r') as file:
-        mcm = json.load(file)
+        mcm_raw = json.load(file)
+    pags = set(utils.get_pags())
+    mcm = {}
+    for dataset_name in mcm_raw:
+        dataset_info = mcm_raw[dataset_name]
+        pwg = dataset_info['pwg']
+        campaign = dataset_info['campaign']
+        generator = dataset_info['generator']
+        if pwg in pags and campaign != 'None' and generator != 'None':
+            mcm[dataset_name] = {'pag': pwg,
+                                 'campaign': campaign,
+                                 'generator': generator}
     datasets_names = set.intersection(set(df1['d_dataset']), set(df2['dataset_name']),
                                       set(df3['d_dataset']), set(mcm.keys()))
     info1 = get_datasets_info(df1, datasets_names, dset_to_idx)
