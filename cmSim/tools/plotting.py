@@ -1,6 +1,8 @@
 import numpy as np
 import pylab as plt
+import seaborn as sns
 from cmSim import utils
+import matplotlib.colors as mc
 from matplotlib.ticker import FormatStrFormatter
 
 
@@ -19,11 +21,22 @@ def sort_stacked_areas(time_series, labels, more_labels=[]):
     return sorted_time_series, sorted_labels
 
 
+def adjust_colors_lightness(colors, lightness=0.6):
+    new_colors = []
+    for col in colors:
+        lightness = lightness if col != 'black' else 0.2
+        rgb = mc.ColorConverter.to_rgb(col)
+        new_col = sns.set_hls_values(color=rgb, h=None, l=lightness, s=None)
+        new_colors.append(new_col)
+    return new_colors
+
+
 def get_default_colors(labels, cmap=plt.cm.tab10):
     colors = [cmap(i) for i in range(len(labels))]
     if 'Not found' in labels:
         i = np.where(labels == 'Not found')[0][0]
         colors[i] = 'black'
+    colors = adjust_colors_lightness(colors)
     return colors
 
 
@@ -35,6 +48,8 @@ def get_custom_colors(labels, groups):
     if groups == 'datalakes':
         lab_to_col = utils.get_datalake_to_color()
     colors = [lab_to_col[lab] for lab in labels]
+    if groups == 'pags' or groups == 'datalakes':
+        colors = adjust_colors_lightness(colors)
     return colors
 
 
@@ -68,12 +83,9 @@ def plot_piechart_by_pag(ax, df, pags, datatiers=None):
 def plot_average_size_per_event(ax, df, datatiers):
     df = df[df['tier'].isin(datatiers)]
     years = sorted(list(df['year'].unique()))
-    datatier_to_color = utils.get_datatier_to_color()
-    colors = []
     data = {}
     for dtier in datatiers:
         df_dtier = df[df['tier'] == dtier]
-        colors.append(datatier_to_color[dtier])
         data[dtier] = []
         for year in years:
             df_year = df_dtier[df_dtier['year'] == year]
@@ -83,6 +95,7 @@ def plot_average_size_per_event(ax, df, datatiers):
                 tot_size / num_events if num_events != 0 else 0.)
     pos = np.arange(len(years))
     width = 0.9 / len(datatiers)
+    colors = get_custom_colors(datatiers, groups='datatiers')
     bars = [ax.bar(pos + i*width, data[datatiers[i]], width=width, label=datatiers[i], color=colors[i])
             for i in range(len(datatiers))]
     ax.set_xticks(pos + (width / 2 * (len(datatiers) - 1)))

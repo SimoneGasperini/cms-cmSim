@@ -1,6 +1,7 @@
 matplotlib
 numpy
 pandas
+seaborn
 pyarrow
 setuptools
 tqdm
