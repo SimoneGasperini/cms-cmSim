@@ -49,21 +49,19 @@ class Base:
             df[~df['tier'].isin(datatiers)], timeline)
         time_series.append(storage_history)
         time_series = np.array(time_series) / 1e15
-        more_labels = ['Other']
-        labels = datatiers + more_labels
         if norm:
             time_series = plotting.norm_stacked_areas(time_series)
             ylabel = 'Data fraction'
         else:
             ylabel = 'Data amount [PB]'
-        time_series, sorted_labels = plotting.sort_stacked_areas(
-            time_series=time_series, labels=datatiers, more_labels=more_labels)
-        sorted_colors = plotting.get_custom_colors(
-            labels=sorted_labels, groups='datatiers')
-        ax.stackplot(timeline, time_series,
-                     labels=sorted_labels, colors=sorted_colors)
-        plotting.set_stackplot_settings(
-            ax, ylabel=ylabel, legend_title='Data tiers', legend_labels=labels)
+        time_series, labels = plotting.sort_stacked_areas(
+            time_series=time_series, labels=datatiers, more_labels=['Other'])
+        colors = plotting.get_custom_colors(labels=labels, groups='datatiers')
+        ax.stackplot(timeline, time_series, labels=labels, colors=colors)
+        plotting.set_legend_settings(ax, title='Data tiers', labels=labels)
+        ax.tick_params(axis='both', which='major', labelsize=18)
+        ax.set_ylabel(ylabel, fontsize=24)
+        ax.grid(linestyle='dotted')
 
     def plot_storage_history_by_pag(self, ax, tier=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         """
