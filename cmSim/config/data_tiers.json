@@ -4,15 +4,15 @@
     },
     "ALCARECO": {
         "name": "ALCARECO",
-        "color": "#00008B"
+        "color": "tan"
     },
     "AOD": {
         "name": "AOD",
-        "color": "#008000"
+        "color": "yellowgreen"
     },
     "AODSIM": {
         "name": "AODSIM",
-        "color": "#E50000"
+        "color": "indianred"
     },
     "DIGI-RECO": {
         "name": "DIGI-RECO"
@@ -36,7 +36,8 @@
         "name": "FEVTHLTALL"
     },
     "GEN": {
-        "name": "GEN"
+        "name": "GEN",
+        "color": "palegreen"
     },
     "GEN-RAW": {
         "name": "GEN-RAW"
@@ -46,7 +47,7 @@
     },
     "GEN-SIM": {
         "name": "GEN-SIM",
-        "color": "#DDA0DD"
+        "color": "mediumorchid"
     },
     "GEN-SIM-DIGI": {
         "name": "GEN-SIM-DIGI"
@@ -56,7 +57,7 @@
     },
     "GEN-SIM-DIGI-RAW": {
         "name": "GEN-SIM-DIGI-RAW",
-        "color": "#00FF00"
+        "color": "lightseagreen"
     },
     "GEN-SIM-DIGI-RAW-HLTDEBUG": {
         "name": "GEN-SIM-DIGI-RAW-HLTDEBUG"
@@ -78,7 +79,7 @@
     },
     "GEN-SIM-RAW": {
         "name": "GEN-SIM-RAW",
-        "color": "#ADD8E6"
+        "color": "hotpink"
     },
     "GEN-SIM-RAW-HLT": {
         "name": "GEN-SIM-RAW-HLT"
@@ -100,7 +101,7 @@
     },
     "GEN-SIM-RECO": {
         "name": "GEN-SIM-RECO",
-        "color": "#008080"
+        "color": "mediumslateblue"
     },
     "GEN-SIM-RECODEBUG": {
         "name": "GEN-SIM-RECODEBUG"
@@ -110,19 +111,19 @@
     },
     "MINIAOD": {
         "name": "MINIAOD",
-        "color": "#4B0082"
+        "color": "khaki"
     },
     "MINIAODSIM": {
         "name": "MINIAODSIM",
-        "color": "#9ACD32"
+        "color": "lightsteelblue"
     },
     "NANOAOD": {
         "name": "NANOAOD",
-        "color": "#653700"
+        "color": "yellow"
     },
     "NANOAODSIM": {
         "name": "NANOAODSIM",
-        "color": "#F97306"
+        "color": "cornflowerblue"
     },
     "NANOEDMAODSIM": {
         "name": "NANOEDMAODSIM"
@@ -138,14 +139,14 @@
     },
     "RAW": {
         "name": "RAW",
-        "color": "#0000FF"
+        "color": "deepskyblue"
     },
     "RAW-HLT": {
         "name": "RAW-HLT"
     },
     "RAW-RECO": {
         "name": "RAW-RECO",
-        "color": "#DAA520"
+        "color": "gold"
     },
     "RAWAODSIM": {
         "name": "RAWAODSIM"
@@ -158,7 +159,7 @@
     },
     "RECO": {
         "name": "RECO",
-        "color": "#00FFFF"
+        "color": "sandybrown"
     },
     "RECODEBUG": {
         "name": "RECODEBUG"
@@ -167,6 +168,7 @@
         "name": "SIM"
     },
     "USER": {
-        "name": "USER"
+        "name": "USER",
+        "color": "chocolate"
     }
 }
