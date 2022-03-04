@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import pylab as plt
 from datetime import date
 from cmSim._base import Base
 from cmSim import utils
@@ -95,18 +97,15 @@ class Country(Base):
                     if 'T2_' in site]
         return t2_sites
 
-    def plot_storage_history_by_site(self, ax, datatiers=None, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
+    def plot_storage_history_by_site(self, ax, norm=False, date1=date(2019, 1, 1), date2=date(2020, 12, 31), freq='W'):
         """
-        Draw a stacked area plot representing the time series of data amout stored on disk in the
-        country (grouped by site) over the given time period (from 'date1' to 'date2' with intervals
-        given by 'freq'). The data are filtered considering only datasets of the specified 'datatiers'.
+        Draw a stacked area plot representing the time series of data amout stored on disk in the country
+        (grouped by site) over the given time period (from 'date1' to 'date2' with intervals given by 'freq').
 
         Parameters
         ----------
         ax : matplotlib.axes
             Matplotlib axes on which to draw the plot
-        datatiers : List[str], optional
-            Datatiers to be considered (if None, all are taken), by default None
         norm : bool, optional
             If True, apply normalization, by default False
         date1 : datetime.date, optional
@@ -117,17 +116,24 @@ class Country(Base):
             Timeline frequency (month: 'M', week: 'W', etc), by default 'W'
         """
         sites = self.t1_sites + self.t2_sites
-        df = self._filter_by_datatiers(self.data, datatiers)
+        df = self.data
         timeline = [dt.date() for dt in pd.date_range(date1, date2, freq=freq)]
         time_series = [self._get_storage_history(df[df['node_name'] == site], timeline)
                        for site in sites]
+        time_series = np.array(time_series) / 1e15
+        average_totsize = round(time_series.mean(axis=1).sum())
         if norm:
+            ax.set_title(
+                f'Average total size $\simeq$ {average_totsize} PB', fontsize=28)
             time_series = plotting.norm_stacked_areas(time_series)
             ylabel = 'Data fraction'
         else:
-            ylabel = 'Data amount [B]'
+            ylabel = 'Data amount [PB]'
         time_series, labels = plotting.sort_stacked_areas(
             time_series=time_series, labels=sites)
-        ax.stackplot(timeline, time_series, labels=labels)
-        plotting.set_stackplot_settings(
-            ax, ylabel=ylabel, legend_title='Sites', legend_labels=sites)
+        colors = plotting.get_default_colors(labels=labels, cmap=plt.cm.Set1)
+        ax.stackplot(timeline, time_series, labels=labels, colors=colors)
+        plotting.set_legend_settings(ax, title='Sites', labels=labels)
+        ax.tick_params(axis='both', which='major', labelsize=18)
+        ax.set_ylabel(ylabel, fontsize=24)
+        ax.grid(linestyle='dotted')
