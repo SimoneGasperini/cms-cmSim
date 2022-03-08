@@ -3,6 +3,7 @@ import re
 import json
 import numpy as np
 from datetime import datetime
+from scipy import stats
 from cmSim.tools import zipping
 
 
@@ -11,6 +12,17 @@ def load_json_file(filename):
     with open(filepath, 'r') as file:
         dictionary = json.load(file)
     return dictionary
+
+
+def remove_outliers_Zscore(arr, n=3):
+    return arr[np.abs(stats.zscore(arr)) < n]
+
+
+def remove_outliers_IQRscore(arr, n=3):
+    q1 = np.quantile(arr, q=0.25)
+    q3 = np.quantile(arr, q=0.75)
+    iqr = q3 - q1
+    return arr[(q1 - n*iqr < arr) & (arr < q3 + n*iqr)]
 
 
 def get_int_from_date(date, format='%y%m%d'):
