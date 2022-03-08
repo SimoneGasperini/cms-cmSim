@@ -31,12 +31,13 @@ def adjust_colors_lightness(colors, lightness=0.6):
     return new_colors
 
 
-def get_default_colors(labels, cmap=plt.cm.tab10):
+def get_default_colors(labels, cmap=plt.cm.tab10, adjust_lightness=True):
     colors = [cmap(i) for i in range(len(labels))]
     if 'Not found' in labels:
         i = np.where(labels == 'Not found')[0][0]
         colors[i] = 'black'
-    colors = adjust_colors_lightness(colors)
+    if adjust_lightness:
+        colors = adjust_colors_lightness(colors)
     return colors
 
 
