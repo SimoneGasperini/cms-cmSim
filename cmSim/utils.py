@@ -1,6 +1,8 @@
 import os
 import re
 import json
+import numpy as np
+from datetime import datetime
 from cmSim.tools import zipping
 
 
@@ -9,6 +11,14 @@ def load_json_file(filename):
     with open(filepath, 'r') as file:
         dictionary = json.load(file)
     return dictionary
+
+
+def get_int_from_date(date, format='%y%m%d'):
+    return int(date.strftime(format))
+
+
+def get_date_from_int(int, format='%y%m%d'):
+    return datetime.strptime(str(int), format).date()
 
 
 def get_countries():
@@ -168,7 +178,7 @@ def get_generator_from_dataset(dataset, mcm_data):
     return 'None'
 
 
-def get_rounded_num_accesses(fract_read, max_num_accesses_in_day=5):
+def get_rounded_num_accesses(fract_read, max_num_accesses_in_day=np.inf):
     if fract_read <= 0:
         return 0
     if fract_read <= 1:
