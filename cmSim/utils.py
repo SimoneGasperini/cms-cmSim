@@ -25,12 +25,12 @@ def remove_outliers_IQRscore(arr, n=3):
     return arr[(q1 - n*iqr < arr) & (arr < q3 + n*iqr)]
 
 
-def get_int_from_date(date, format='%y%m%d'):
-    return int(date.strftime(format))
+def get_string_from_date(date, format='%y%m%d'):
+    return date.strftime(format)
 
 
-def get_date_from_int(int, format='%y%m%d'):
-    return datetime.strptime(str(int), format).date()
+def get_date_from_string(string, format='%y%m%d'):
+    return datetime.strptime(string, format).date()
 
 
 def get_countries():

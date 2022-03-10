@@ -93,15 +93,15 @@ def create_replicas_info_json(replicas_file, datatier_to_outdir):
         datasets_names = get_datasets_names(datatier=datatier.upper())
         dframe = replicas_df[replicas_df['dataset_name'].isin(datasets_names)]
         for col in ['min_time', 'max_time']:
-            dframe[col] = dframe[col].apply(utils.get_int_from_date)
+            dframe[col] = dframe[col].apply(utils.get_string_from_date)
         data = {}
         for d, df in tqdm(dframe.groupby('dataset_name')):
             data[d] = {'num_replicas': {},
                        'size_replicas': {},
                        'num_sites_replicas': {}}
-            start = utils.get_date_from_int(df['min_time'].min())
-            end = utils.get_date_from_int(df['max_time'].max())
-            date_range = [utils.get_int_from_date(dt.date())
+            start = utils.get_date_from_string(df['min_time'].min())
+            end = utils.get_date_from_string(df['max_time'].max())
+            date_range = [utils.get_string_from_date(dt.date())
                           for dt in pd.date_range(start=start, end=end, freq='D')]
             for date in date_range:
                 df_date = df[(df['min_time'] <= date) &
