@@ -74,22 +74,19 @@ class PopularityAnalyzer:
         ax.legend(title='PAGs', title_fontsize=20, loc='center left',
                   bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16)
 
-    def plot_features_over_time(self, ax, date1=date(2019, 1, 1), date2=date(2020, 12, 31), agg_by='day', agg_func=np.mean, norm=False):
+    def plot_features_over_time(self, ax, date1=date(2019, 1, 1), date2=date(2020, 12, 31), agg_by='month', agg_func=np.mean, norm=False):
         features = ['num_replicas', 'fract_replicas',
                     'num_sites_replicas', 'num_accesses']
         date_range = pd.date_range(start=date1, end=date2, freq='D')
         days = [utils.get_string_from_date(dt.date()) for dt in date_range]
-        mapper = {'day': None,
-                  'week': utils.get_day_to_week(days),
+        mapper = {'week': utils.get_day_to_week(days),
                   'month': utils.get_day_to_month(days)}[agg_by]
         data = {}
         for feature in features:
-            col = self.df[feature].to_list()
-            if agg_by != 'day':
-                col = [self.aggregate_dict(dict, agg_func=agg_func, mapper=mapper)
-                       for dict in col]
+            var = [self.aggregate_dict(dict, agg_func=agg_func, mapper=mapper)
+                   for dict in self.df[feature]]
             data[feature] = dict(functools.reduce(
-                operator.add, map(Counter, col)))
+                operator.add, map(Counter, var)))
         xs = sorted(list(data[features[0]].keys()))
         for feature in data:
             d = data[feature]
