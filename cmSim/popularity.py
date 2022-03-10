@@ -29,6 +29,11 @@ class PopularityAnalyzer:
                     for key, group in itertools.groupby(dict, lambda day: mapper.get(day, None))}
         return new_dict
 
+    def cut_daily_num_accesses(self, threshold):
+        self.df['num_accesses'] = self.df['num_accesses'].apply(
+            lambda dict: {day: num if num < threshold else threshold
+                          for day, num in dict.items()})
+
     def show_histogram(self, ax, colname, remove_outliers=False):
         arr = self.df[colname].to_numpy()
         if remove_outliers:
