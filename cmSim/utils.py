@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import itertools
 import numpy as np
 from datetime import datetime
 from scipy import stats
@@ -31,6 +32,19 @@ def get_string_from_date(date, format='%y%m%d'):
 
 def get_date_from_string(string, format='%y%m%d'):
     return datetime.strptime(string, format).date()
+
+
+def get_day_to_week(days):
+    day_to_week = {day: f'{year}-week{str(i//7 + 1).zfill(2)}'
+                   for year, ds in itertools.groupby(days, lambda day: f'20{day[:2]}')
+                   for i, day in enumerate(ds)}
+    return day_to_week
+
+
+def get_day_to_month(days):
+    day_to_month = {day: f'20{day[:2]}-{day[2:4]}'
+                    for day in days}
+    return day_to_month
 
 
 def get_countries():
