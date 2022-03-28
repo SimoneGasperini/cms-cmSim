@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import math
 import itertools
 import numpy as np
 from datetime import datetime
@@ -204,14 +205,12 @@ def get_generator_from_dataset(dataset, mcm_data):
     return 'None'
 
 
-def get_rounded_num_accesses(fract_read, max_num_accesses_in_day=np.inf):
-    if fract_read <= 0:
-        return 0
-    if fract_read <= 1:
-        return 1
-    if fract_read <= max_num_accesses_in_day:
-        return round(fract_read)
-    return max_num_accesses_in_day
+def get_rounded_num_accesses(fract_read, max_num_accesses=None):
+    num_accesses = math.ceil(fract_read)
+    if max_num_accesses is None:
+        return num_accesses
+    else:
+        return num_accesses if num_accesses <= max_num_accesses else max_num_accesses
 
 
 def get_pag_to_color():
