@@ -96,9 +96,7 @@ def create_replicas_info_json(replicas_file, datatier_to_outdir):
             dframe[col] = dframe[col].apply(utils.get_string_from_date)
         data = {}
         for d, df in tqdm(dframe.groupby('dataset_name')):
-            data[d] = {'num_replicas': {},
-                       'size_replicas': {},
-                       'num_sites_replicas': {}}
+            data[d] = {'num_replicas': {}, 'size_replicas': {}}
             start = utils.get_date_from_string(df['min_time'].min())
             end = utils.get_date_from_string(df['max_time'].max())
             date_range = [utils.get_string_from_date(dt.date())
@@ -109,26 +107,26 @@ def create_replicas_info_json(replicas_file, datatier_to_outdir):
                 num_replicas = len(df_date)
                 if num_replicas > 0:
                     size_replicas = round(df_date['rep_size'].sum())
-                    num_sites_replicas = df_date['node_name'].nunique()
                     data[d][f'num_replicas'][date] = num_replicas
                     data[d][f'size_replicas'][date] = size_replicas
-                    data[d][f'num_sites_replicas'][date] = num_sites_replicas
         outfile = datatier_to_outdir[datatier] + 'replicas_info.json'
         with open(outfile, mode='w') as f:
             json.dump(data, f)
 
 
-# Datasets reads/accesses
-def create_accesses_info_json(accesses_file, datatier_to_outdir):
-    accesses_df = pd.read_parquet(accesses_file).dropna()
-    accesses_df['tier'] = accesses_df['d_dataset'].apply(
+# Datasets reads/accessess
+def create_accesses_info_json(reads_file, datatier_to_outdir):
+    reads_df = pd.read_parquet(reads_file).dropna()
+    reads_df['tier'] = reads_df['d_dataset'].apply(
         lambda name: name.split('/')[-1])
     for datatier in datatier_to_outdir:
         message = f'\nCreating "{datatier}/accesses_info.json" file...'
         print(message, flush=True)
         datasets_names = get_datasets_names(datatier=datatier.upper())
-        dframe = accesses_df[accesses_df['d_dataset'].isin(datasets_names)]
-        data = {d: {'num_accesses': {int(row['day'][2:]): utils.get_rounded_num_accesses(row['fract_read'])
+        dframe = reads_df[reads_df['d_dataset'].isin(datasets_names)]
+        data = {d: {'num_accesses': {int(row['day'][2:]):
+                                     utils.get_rounded_num_accesses(row['fract_read'],
+                                                                    max_num_accesses=5)
                                      for _, row in df.iterrows()}}
                 for d, df in tqdm(dframe.groupby('d_dataset'))}
         outfile = datatier_to_outdir[datatier] + 'accesses_info.json'
@@ -167,7 +165,7 @@ def create_pop_dataframe_parquet(datatier_to_outdir):
 
 def fix_pop_dataframe_parquet(path):
     df = pd.read_parquet(path)
-    for col in ['num_replicas', 'size_replicas', 'num_sites_replicas', 'num_accesses']:
+    for col in ['num_replicas', 'size_replicas', 'num_accesses']:
         df[col] = df[col].apply(lambda dict: {k: int(dict[k]) if dict[k] is not None else 0
                                               for k in dict})
     df['size_replicas'] = df.apply(lambda row: {day: row['size_replicas'][day] / row['tot_size']
@@ -178,12 +176,12 @@ def fix_pop_dataframe_parquet(path):
 
 if __name__ == '__main__':
 
-    datatiers = ['aodsim', 'miniaodsim', 'nanoaodsim']
+    datatiers = ['aodsim', 'miniaodsim']
     dbs_file = './../data/parquet/dataset_size_info.parquet'
     datatier_to_mcm_file = {
         dt: f'./../data/mcm/{dt}_mcm_data.json' for dt in datatiers}
     replicas_file = './../data/parquet/dataset_site_info.parquet'
-    accesses_file = './../data/parquet/dataset_reads.parquet'
+    reads_file = './../data/parquet/dataset_reads.parquet'
     datatier_to_outdir = {
         dt: f'./../data/popularity/{dt}/' for dt in datatiers}
 
@@ -191,5 +189,5 @@ if __name__ == '__main__':
     create_dbs_features_json(dbs_file, datatier_to_outdir)
     create_mcm_features_json(datatier_to_mcm_file, datatier_to_outdir)
     create_replicas_info_json(replicas_file, datatier_to_outdir)
-    create_accesses_info_json(accesses_file, datatier_to_outdir)
+    create_accesses_info_json(reads_file, datatier_to_outdir)
     create_pop_dataframe_parquet(datatier_to_outdir)
