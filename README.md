@@ -1,5 +1,15 @@
 # CMS computing model - Data Analytics
 
+### Data Analytics toolkit for CMS computing operations monitoring
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Usage example](#usage-example)
+- [Repository structure](#repository-structure)
+- [External links](#external-links)
+- [Publications](#publications)
+
+#
 
 ## Introduction
 Computing operations at the Large Hadron Collider (LHC) at CERN rely on the Worldwide LHC Computing Grid (WLCG) infrastructure, designed to efficiently allow storage, access, and processing of data at the pre-exascale level.
@@ -14,7 +24,7 @@ CMS relies on its **Monte Carlo Management** (MCM) system, a tool to collect and
 Exploiting these sources, and using a data-driven approach oriented to the analysis of the aforementioned meta-data, we started to focus on data storage and data transfers over the WLCG infrastructure, and drafted an embrional software toolkit that can provide useful indicators about recurrent patterns and their correlations, for a deeper and more accurate exploration of the CMS computing beating heart in terms data movement and access.\
 This aims – as a short-to-medium term goal – at exploring the effectiveness and adequateness of various choices in a data lake context, and – as a long term goal – at contributing to the overall design of a predictive/adaptive system that would eventually reduce cost and complexity of the CMS computing operations, while taking into account the stringent requests and the boundary conditions set by the physics analysts community.
 
-#
+<br>
 
 ## Installation
 To install the toolkit, you can simply clone the repository and run the `setup.py` installer.
@@ -25,7 +35,7 @@ cd cms-cmSim
 python setup.py install
 ```
 
-#
+<br>
 
 ## Usage example
 As an example, let's suppose you want to know how much data is stored on disk in a specific site (e.g. `T1_FNAL` in the `US`) in a particular year (e.g. 2019), grouping the data by a custom list of data tiers.
@@ -53,7 +63,7 @@ site.plot_storage_history_by_datatier(ax, datatiers=datatiers,
 ```
 ![plot](t1_us_fnal_disk.png)
 
-#
+<br>
 
 ## Repository structure
 - `cmSim\` 🠊 main directory containing the core modules implementing classes to be used for data analytics, together with general configurations and additional tools;
@@ -89,13 +99,15 @@ site.plot_storage_history_by_datatier(ax, datatiers=datatiers,
 └── setup.py
 ```
 
-#
+<br>
+
 ## External links
 * CMS monitoring data: [CMS-cmSim/data/](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/Eh5PN28-dPxMk8k6xOKacHsBAtPoEHkqk03jwOgqshaB5A?e=0CBqhg)
 
 * CMS monitoring dashboard: [CMS-monit](https://monit-grafana.cern.ch/d/000000530/cms-monitoring-project?orgId=11)
 
-#
+<br>
+
 ## Publications
 * Master Thesis in Physics (UniBo & INFN): [INFN thesis](https://pubblicazioni.dsi.infn.it/tesi/listaTesi.php)
 
@@ -105,4 +117,4 @@ site.plot_storage_history_by_datatier(ax, datatiers=datatiers,
 
 #
 
-<p align="right"><img src="https://avatars2.githubusercontent.com/u/71086758?s=400&v=4" width="20px;"/> Simone Gasperini - simone.gasperini@cern.ch <br> simone.gasperini4@unibo.it</p>
+<p align="right"><img src="https://avatars2.githubusercontent.com/u/71086758?s=400&v=4" width="12px;"/> <a href="https://github.com/SimoneGasperini">Simone Gasperini</a> - simone.gasperini@cern.ch <br> simone.gasperini4@unibo.it</p>
