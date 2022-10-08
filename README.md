@@ -121,7 +121,7 @@ site.plot_storage_history_by_datatier(ax, datatiers=datatiers,
 
 * Parallel session talk - International Symposium on Grids & Clouds 2022 (21-25 March, 2022, Academia Sinica Computing Centre, Taipei, Taiwan): [Indico page](https://indico4.twgrid.org/event/20/contributions/1120/)
 
-* Proceedings of Science - International Symposium on Grids & Clouds 2022 (21-25 March, 2022, Academia Sinica Computing Centre, Taipei, Taiwan): [PoS paper](https://pos.sissa.it/415/006/)
+* Proceedings of Science - International Symposium on Grids & Clouds 2022 (21-25 March, 2022, Academia Sinica Computing Centre, Taipei, Taiwan): [PoS paper](https://inspirehep.net/literature/2158665)
 
 #
 
