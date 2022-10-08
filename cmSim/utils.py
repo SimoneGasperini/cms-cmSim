@@ -222,14 +222,19 @@ def get_pag_to_color():
     return pag_to_color
 
 
-def get_datatiers():
+def get_datatiers(type=None):
     datatiers_dict = load_json_file('data_tiers.json')
-    return sorted(list(datatiers_dict.keys()))
+    if type is None:
+        datatiers = sorted(list(datatiers_dict.keys()))
+    else:
+        datatiers = sorted([dt for dt in datatiers_dict
+                            if datatiers_dict[dt]['type'] == type])
+    return datatiers
 
 
 def get_datatier_to_color():
     datatiers_dict = load_json_file('data_tiers.json')
-    datatiers = get_datatiers()
+    datatiers = sorted(list(datatiers_dict.keys()))
     datatier_to_color = {dt: datatiers_dict[dt]['color'] for dt in datatiers
                          if 'color' in datatiers_dict[dt]}
     datatier_to_color['Other'] = 'gray'
