@@ -6,3 +6,4 @@ seaborn
 pyarrow
 setuptools
 tqdm
+scikit-learn
