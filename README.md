@@ -91,12 +91,18 @@ site.plot_storage_history_by_datatier(ax, datatiers=datatiers,
 
 #
 ## External links
-### 🠊 CMS monitoring data available: [CMS-cmSim/data/](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/Eh5PN28-dPxMk8k6xOKacHsBAtPoEHkqk03jwOgqshaB5A?e=0CBqhg)
+* CMS monitoring data: [CMS-cmSim/data/](https://liveunibo-my.sharepoint.com/:f:/g/personal/simone_gasperini2_studio_unibo_it/Eh5PN28-dPxMk8k6xOKacHsBAtPoEHkqk03jwOgqshaB5A?e=0CBqhg)
 
-### 🠊 CMS monitoring project dashboard: [CMS-MONIT](https://monit-grafana.cern.ch/d/000000530/cms-monitoring-project?orgId=11)
+* CMS monitoring dashboard: [CMS-monit](https://monit-grafana.cern.ch/d/000000530/cms-monitoring-project?orgId=11)
 
-### 🠊 Presentation at "ISGC 2022, Taiwan": [CMS-cmSim/ISGC_2022.pdf](https://liveunibo-my.sharepoint.com/:b:/g/personal/simone_gasperini2_studio_unibo_it/EdpRYSr3AbFCrnrAy1vt-xcBbXt0Cg75GZjzd1jkvu1hOw?e=GROqMc)
+#
+## Publications
+* Master Thesis in Physics (UniBo & INFN): [INFN thesis](https://pubblicazioni.dsi.infn.it/tesi/listaTesi.php)
+
+* Parallel session talk - International Symposium on Grids & Clouds 2022 (21-25 March, 2022, Academia Sinica Computing Centre, Taipei, Taiwan): [Indico page](https://indico4.twgrid.org/event/20/contributions/1120/)
+
+* Proceedings of Science - International Symposium on Grids & Clouds 2022 (21-25 March, 2022, Academia Sinica Computing Centre, Taipei, Taiwan): [PoS paper](https://pos.sissa.it/415/006/)
 
 #
 
-<p align="right"><img src="https://avatars2.githubusercontent.com/u/71086758?s=400&v=4" width="20px;"/> Simone Gasperini - simone.gasperini@cern.ch</p>
+<p align="right"><img src="https://avatars2.githubusercontent.com/u/71086758?s=400&v=4" width="20px;"/> Simone Gasperini - simone.gasperini@cern.ch <br> simone.gasperini4@unibo.it</p>
