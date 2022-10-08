@@ -1,174 +1,262 @@
 {
     "ALCAPROMPT": {
-        "name": "ALCAPROMPT"
+        "name": "ALCAPROMPT",
+        "type": "data",
+        "color": "black"
     },
     "ALCARECO": {
         "name": "ALCARECO",
+        "type": "data",
         "color": "tan"
     },
     "AOD": {
         "name": "AOD",
+        "type": "data",
         "color": "yellowgreen"
     },
     "AODSIM": {
         "name": "AODSIM",
+        "type": "mc",
         "color": "indianred"
     },
     "DIGI-RECO": {
-        "name": "DIGI-RECO"
+        "name": "DIGI-RECO",
+        "type": "mc",
+        "color": "black"
     },
     "DQM": {
-        "name": "DQM"
+        "name": "DQM",
+        "type": "data",
+        "color": "black"
     },
     "DQMIO": {
-        "name": "DQMIO"
+        "name": "DQMIO",
+        "type": "data",
+        "color": "black"
     },
     "DQMROOT": {
-        "name": "DQMROOT"
+        "name": "DQMROOT",
+        "type": "data",
+        "color": "black"
     },
     "FEVT": {
-        "name": "FEVT"
+        "name": "FEVT",
+        "type": "data",
+        "color": "lawngreen"
     },
     "FEVTDEBUGHLT": {
-        "name": "FEVTDEBUGHLT"
+        "name": "FEVTDEBUGHLT",
+        "type": "data",
+        "color": "black"
     },
     "FEVTHLTALL": {
-        "name": "FEVTHLTALL"
+        "name": "FEVTHLTALL",
+        "type": "data",
+        "color": "black"
     },
     "GEN": {
         "name": "GEN",
-        "color": "palegreen"
+        "type": "mc",
+        "color": "lightseagreen"
     },
     "GEN-RAW": {
-        "name": "GEN-RAW"
+        "name": "GEN-RAW",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-RAWDEBUG": {
-        "name": "GEN-RAWDEBUG"
+        "name": "GEN-RAWDEBUG",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM": {
         "name": "GEN-SIM",
+        "type": "mc",
         "color": "mediumorchid"
     },
     "GEN-SIM-DIGI": {
-        "name": "GEN-SIM-DIGI"
+        "name": "GEN-SIM-DIGI",
+        "type": "mc",
+        "color": "darkkhaki"
     },
     "GEN-SIM-DIGI-HLTDEBUG-RECO": {
-        "name": "GEN-SIM-DIGI-HLTDEBUG-RECO"
+        "name": "GEN-SIM-DIGI-HLTDEBUG-RECO",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-DIGI-RAW": {
         "name": "GEN-SIM-DIGI-RAW",
-        "color": "lightseagreen"
+        "type": "mc",
+        "color": "palegreen"
     },
     "GEN-SIM-DIGI-RAW-HLTDEBUG": {
-        "name": "GEN-SIM-DIGI-RAW-HLTDEBUG"
+        "name": "GEN-SIM-DIGI-RAW-HLTDEBUG",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-DIGI-RAW-HLTDEBUG-RECO": {
-        "name": "GEN-SIM-DIGI-RAW-HLTDEBUG-RECO"
+        "name": "GEN-SIM-DIGI-RAW-HLTDEBUG-RECO",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-DIGI-RAW-MINIAOD": {
-        "name": "GEN-SIM-DIGI-RAW-MINIAOD"
+        "name": "GEN-SIM-DIGI-RAW-MINIAOD",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-DIGI-RAW-RECO": {
-        "name": "GEN-SIM-DIGI-RAW-RECO"
+        "name": "GEN-SIM-DIGI-RAW-RECO",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-DIGI-RECO": {
-        "name": "GEN-SIM-DIGI-RECO"
+        "name": "GEN-SIM-DIGI-RECO",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-DIGI-RECODEBUG": {
-        "name": "GEN-SIM-DIGI-RECODEBUG"
+        "name": "GEN-SIM-DIGI-RECODEBUG",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-RAW": {
         "name": "GEN-SIM-RAW",
+        "type": "mc",
         "color": "hotpink"
     },
     "GEN-SIM-RAW-HLT": {
-        "name": "GEN-SIM-RAW-HLT"
+        "name": "GEN-SIM-RAW-HLT",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-RAW-HLTDEBUG": {
-        "name": "GEN-SIM-RAW-HLTDEBUG"
+        "name": "GEN-SIM-RAW-HLTDEBUG",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-RAW-HLTDEBUG-RECO": {
-        "name": "GEN-SIM-RAW-HLTDEBUG-RECO"
+        "name": "GEN-SIM-RAW-HLTDEBUG-RECO",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-RAW-HLTDEBUG-RECODEBUG": {
-        "name": "GEN-SIM-RAW-HLTDEBUG-RECODEBUG"
+        "name": "GEN-SIM-RAW-HLTDEBUG-RECODEBUG",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-RAW-RECO": {
-        "name": "GEN-SIM-RAW-RECO"
+        "name": "GEN-SIM-RAW-RECO",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-RAWDEBUG": {
-        "name": "GEN-SIM-RAWDEBUG"
+        "name": "GEN-SIM-RAWDEBUG",
+        "type": "mc",
+        "color": "black"
     },
     "GEN-SIM-RECO": {
         "name": "GEN-SIM-RECO",
-        "color": "mediumslateblue"
+        "color": "darkorange",
+        "type": "mc"
     },
     "GEN-SIM-RECODEBUG": {
-        "name": "GEN-SIM-RECODEBUG"
+        "name": "GEN-SIM-RECODEBUG",
+        "type": "mc",
+        "color": "mediumslateblue"
     },
     "LHE": {
-        "name": "LHE"
+        "name": "LHE",
+        "type": "mc",
+        "color": "black"
     },
     "MINIAOD": {
         "name": "MINIAOD",
-        "color": "khaki"
+        "type": "data",
+        "color": "chocolate"
     },
     "MINIAODSIM": {
         "name": "MINIAODSIM",
+        "type": "mc",
         "color": "lightsteelblue"
     },
     "NANOAOD": {
         "name": "NANOAOD",
-        "color": "yellow"
+        "type": "data",
+        "color": "navy"
     },
     "NANOAODSIM": {
         "name": "NANOAODSIM",
+        "type": "mc",
         "color": "cornflowerblue"
     },
     "NANOEDMAODSIM": {
-        "name": "NANOEDMAODSIM"
+        "name": "NANOEDMAODSIM",
+        "type": "mc",
+        "color": "black"
     },
     "PREMIX": {
-        "name": "PREMIX"
+        "name": "PREMIX",
+        "type": "data",
+        "color": "royalblue"
     },
     "PREMIX-RAW": {
-        "name": "PREMIX-RAW"
+        "name": "PREMIX-RAW",
+        "type": "data",
+        "color": "black"
     },
     "PREMIXRAW": {
-        "name": "PREMIXRAW"
+        "name": "PREMIXRAW",
+        "type": "data",
+        "color": "black"
     },
     "RAW": {
         "name": "RAW",
-        "color": "deepskyblue"
+        "color": "deepskyblue",
+        "type": "data"
     },
     "RAW-HLT": {
-        "name": "RAW-HLT"
+        "name": "RAW-HLT",
+        "type": "data",
+        "color": "black"
     },
     "RAW-RECO": {
         "name": "RAW-RECO",
+        "type": "data",
         "color": "gold"
     },
     "RAWAODSIM": {
-        "name": "RAWAODSIM"
+        "name": "RAWAODSIM",
+        "type": "mc",
+        "color": "black"
     },
     "RAWDEBUG": {
-        "name": "RAWDEBUG"
+        "name": "RAWDEBUG",
+        "type": "data",
+        "color": "black"
     },
     "RAWRECOSIMHLT": {
-        "name": "RAWRECOSIMHLT"
+        "name": "RAWRECOSIMHLT",
+        "type": "mc",
+        "color": "black"
     },
     "RECO": {
         "name": "RECO",
+        "type": "data",
         "color": "sandybrown"
     },
     "RECODEBUG": {
-        "name": "RECODEBUG"
+        "name": "RECODEBUG",
+        "type": "data",
+        "color": "black"
     },
     "SIM": {
-        "name": "SIM"
+        "name": "SIM",
+        "type": "mc",
+        "color": "black"
     },
     "USER": {
         "name": "USER",
-        "color": "chocolate"
+        "type": "data",
+        "color": "khaki"
     }
 }

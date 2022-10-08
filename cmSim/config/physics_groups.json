@@ -13,7 +13,7 @@
         "BPH": {
             "name": "B Physics",
             "code": "BPH",
-            "color": "tab:red"
+            "color": "tab:cyan"
         },
         "FSQ": {
             "name": "Forward & Small-x QCD",
@@ -33,7 +33,7 @@
         "EXO": {
             "name": "Exotica",
             "code": "EXO",
-            "color": "tab:cyan"
+            "color": "tab:red"
         },
         "HIN": {
             "name": "Heavy Ions",
