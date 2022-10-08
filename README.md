@@ -72,7 +72,11 @@ site.plot_storage_history_by_datatier(ax, datatiers=datatiers,
 
     * `cmSim\tools\` 🠊 contains additional code implementing some basic functionalities related to the project (e.g. zipping JSON files);
 
-- `notebooks\` 🠊 contains jupyter notebooks as working examples about how to use the toolkit but also to start exploring the data;
+- `notebooks\` 🠊 contains jupyter notebooks as working examples about how to use the toolkit basic functionalities;
+
+- `analytics\` 🠊 contains jupyter notebooks created to start exploring the available data and visualizing results;
+
+- `popularity\` 🠊 contains the filtered and pre-processed data and the jupyter notebook created to explore data popularity, define its metric, and finally run a ML model (Random Forest) for classifying AODSIM datasets;
 
 - `scripts\` 🠊 contains scripts to perform specific tasks (e.g. data pre-processing).
 
@@ -90,6 +94,10 @@ site.plot_storage_history_by_datatier(ax, datatiers=datatiers,
 |   ├── utils.py
 |   └── ...
 ├── notebooks\
+|   └── ...
+├── analytics\
+|   └── ...
+├── popularity\
 |   └── ...
 ├── scripts\
 |   └── ...
